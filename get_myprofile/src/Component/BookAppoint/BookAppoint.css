@@ -1,0 +1,15 @@
+.bookHead{
+    background-color: white;
+}
+.book_appoin{
+    box-shadow: 4px 4px 12px darkgray;
+}
+.book-item{
+    background-color: white;
+}
+.book-item2{
+    text-align: center;
+    background-color: darkblue;
+    color: white;
+    padding: 80px 120px;
+}

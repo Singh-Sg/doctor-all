@@ -1,0 +1,14 @@
+:root{
+    --pri:red;
+    --sec:darkblue;
+}
+h2{
+    font-family: 'Arial';
+    font-weight: bold;
+    /* color: darkblue; */
+    color:var(--sec);
+}
+hr{
+    width: 120px;
+    color: var(--sec);
+}

@@ -1,0 +1,15 @@
+/* :root{
+    --pri:darkblue;
+    --sec:rgb(198, 238, 252);
+} */
+h2{
+    color: darkblue;
+}
+.btn11{
+color: darkblue !important;
+border-color: darkblue !important;
+background-color: transparent !important;
+}
+.faqs-sec{
+    background-color: lightblue !important;
+}

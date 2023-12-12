@@ -11,5 +11,5 @@ __pycache__/
 *.sqlite3
 *.db
 
-# test_img_*
-# testuser_*
+test_img_*
+testuser_*

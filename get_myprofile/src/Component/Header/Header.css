@@ -1,0 +1,28 @@
+/* .dr_span{
+    background-color: darkblue;
+    color: White;
+    border-radius: 50%;
+    padding: 8px 8px;
+} */
+#navbarText ul{
+    margin: auto 600px;
+}
+#navbarText ul li{
+    padding: auto 30px !important;
+    color: black !important;
+}
+#navbarText ul li{
+    margin-left: 20px;
+}
+#navbarText ul li Link{
+    padding: auto 120px !important;
+}
+.nav-head{
+    height: 100px;
+    width: 100%;
+    padding: 15px 20px;
+    box-shadow: 2px 2px 12px 0px lightslategrey;
+}
+.dr_nm{
+    padding: 0px 0px;
+}
