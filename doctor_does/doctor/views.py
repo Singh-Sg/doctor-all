@@ -29,7 +29,7 @@ class RegisterApi(generics.GenericAPIView):
         return Response(
             {
                 "user": UserSerializer(user).data,
-                "message": "User Created Successfully",
+                "message": "User Created Successfully.",
             },
             status=status.HTTP_201_CREATED,
         )
