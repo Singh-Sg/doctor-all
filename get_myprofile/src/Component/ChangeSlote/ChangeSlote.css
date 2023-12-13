@@ -1,0 +1,17 @@
+/* .slote1{
+    display: flex;
+    justify-content: center;
+} */
+/* .slot2,.slot3,.slot4{
+    display: flex;
+    justify-content: space-around;
+} */
+.slot1{
+    display: flex;
+    justify-content: center !important;
+    /* align-items: center !important; */
+}
+/* .caroHead{
+    display: flex;
+    justify-content: space-between;
+} */

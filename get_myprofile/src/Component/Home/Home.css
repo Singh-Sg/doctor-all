@@ -16,13 +16,8 @@
     width:800px;
     letter-spacing: 2px;
     word-spacing: 2px;
-    /* border-radius: 8px; */
     color: white;
-    /* font-weight: bold; */
     font-size: 18px !important;
-    /* display: flex;
-    justify-content: center !important;
-    align-items: center !important; */
 }
 .hm_div2{
     margin-left: 150px;
@@ -32,28 +27,9 @@
 
 }
 .hm_div3{
-    /* background-color: white; */
-    /* color: rgba(53, 53, 120, 0.981); */
     width:600px;
     padding: 0px auto;
-    /* font-size: 16px; */
-    /* font-family: 'Arial'; */
-    /* font-weight: bold; */
-    /* border-radius: 8px; */
 }
-/* .aside-text{
-    font-size: 28px !important;
-    font-family: 'Cursive';
-    font-weight: bold;
-
-} */
-
-/* .aside_one img{
-    width: 180px;
-    height: 180px;
-    margin-top: 10px;
-    border-radius: 50%;
-} */
 .butt{
     width: 250px;
     height: 60px !important;
@@ -66,7 +42,6 @@
     padding: 15px 20px;
     background-color: transparent;
 }
-/*  */
 .home_sect2{
     background-color: white;
     position: relative;
@@ -79,7 +54,6 @@
 .home_sect2 h3{
     color: darkblue;
 }
-/*  */
 .home_sect3{
     background-color: white;
     position: relative;
@@ -103,34 +77,55 @@
     padding: 15px 20px;
     background-color: transparent;
     margin-top: 30px;
-    /* margin-left: 50px; */
 }
-/* .home_sect3three{
-    margin-top: -120px;
-    text-align: center;
-    background-color: white;
-    border: 1px solid black;
-    width: 400px;
-}
-.home_sect3three p{
-    font-family: 'Arial';
-    text-decoration: underline;
-} */
 .home_sect4{
     margin-top: -120px;
     background-color: white;
-    /* border-bottom: 1px solid; */
 }
 .home_sect5{
     margin-top: 0px;
     background-color: white;
-
 }
 .healthBtn{
-    /* display: flex;
-    justify-content: right !important; */
     color:darkblue;
     width:200px !important;
     height:50px !important;
     border-color:2px solid darkblue !important;
+}
+@media screen and (max-width:600px){
+    .butt{
+        width: 250px;
+        height: 60px !important;
+        background-color: darkblue;
+        color: white;
+        border-color: white;
+        border-width: 3px;
+        border-radius: 8px;  
+        font-weight: bold;
+        padding: 15px 20px;
+        margin-left: 160px;
+        background-color: transparent;
+    }
+    .aboutimg{
+        margin-top: 120px;
+    }
+}
+@media screen and (max-width:900px) and (min-width:601px) {
+    .hmSectDivt{
+        display: none;
+    }
+    .asideimg{
+        margin-left: 140px;
+    }
+}
+@media screen and (max-width:1200px) and (min-width:901px) {
+    .hmSectDivt{
+        width:40%;
+        height: 40%;
+        margin-top: 40px;
+        margin-left: -180px;
+    }
+    .asideimg{
+        margin-left: 140px;
+    }
 }

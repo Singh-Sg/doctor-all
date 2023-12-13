@@ -26,3 +26,19 @@
 .dr_nm{
     padding: 0px 0px;
 }
+
+@media screen and (max-width:400px){
+    #navbarText ul{
+        margin: auto 120px;
+    } 
+}
+@media screen and (max-width:600px) and (min-width:401px){
+    #navbarText ul{
+        margin: auto 240px;
+    } 
+}
+@media screen and (max-width:900px) and (min-width:601px){
+    #navbarText ul{
+        margin: auto 410px;
+    } 
+}

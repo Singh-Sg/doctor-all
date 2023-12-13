@@ -10,18 +10,17 @@ import SimpleMap from '../SimpleMap/SimpleMap';
 export default function Foot() {
     return (
         <div className='foot'>
-            <br/>
-            <br/>
+            <br />
+            <br />
             <div className='container'>
-                {/* <br /> */}
                 <div className='row'>
                     <div className='col-sm-12 col-md-3 col-lg-3'>
                         <h5>My Clinic</h5>
-                        <SimpleMap/>
-                        <div className='d-inline-flex justify-content-center'>
-                        <p><FacebookIcon/></p>
-                        <p><InstagramIcon/></p>
-                        <p><YouTubeIcon/></p>
+                        <SimpleMap />
+                        <div className='d-flex justify-content-between'>
+                            <p><FacebookIcon /></p>
+                            <p><InstagramIcon /></p>
+                            <p><YouTubeIcon /></p>
                         </div>
                     </div>
                     <div className='col-sm-12 col-md-3 col-lg-3'>
@@ -45,8 +44,8 @@ export default function Foot() {
                     </div>
                     <div className='col-sm-12 col-md-3 col-lg-3'>
                         <h5>Contact Us</h5>
-                        <p><CallIcon/>:2231232343</p>
-                        <p><LocationOnIcon/>:xyz Mall,Near Abc Road,wxy Hospital,Madhya Pradesh,445343</p>
+                        <p><CallIcon />2231232343</p>
+                        <p><LocationOnIcon />XYZ Mall,Near Abc Road,wxy Hospital,Madhya Pradesh,445343</p>
                     </div>
                 </div>
             </div>
