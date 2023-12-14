@@ -1,0 +1,8 @@
+
+@media screen and (max-width:600px) {
+    .imggcol{
+        width:200px;
+        margin-left: -160px !important; 
+    }
+    
+}

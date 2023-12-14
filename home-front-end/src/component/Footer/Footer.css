@@ -1,0 +1,19 @@
+.footer{
+    background-color: #0049B7;
+    color: white;
+}
+.footer p{
+    font-weight: normal !important;
+}
+.PrivPol{
+    margin-top: 40px;
+}
+p{
+    display: flex;
+    justify-content: left !important;
+    font-weight: normal !important;
+}
+.secPrivPol p{
+    display: flex;
+    justify-content: right !important;   
+}

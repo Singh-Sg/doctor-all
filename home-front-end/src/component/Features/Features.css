@@ -1,0 +1,85 @@
+.navList ul li{
+    color: white !important;
+    font-weight: bold;
+    margin-left:20px !important;
+   text-decoration: none !important;
+   border-bottom:none;
+   color: inherit; 
+   cursor: pointer;
+
+}
+   /* fgfdgdfgd */
+.navList ul li Link{
+    text-decoration: none; /*Remove underline*/
+    color: inherit; /*Use the parent element's color*/
+    border-bottom: none; /*Remove bottom border*/
+    cursor: pointer; /*Set cursor to pointer for better user experience */
+  }
+  .section1 h2,p{
+    font-family: 'Arial' !important;
+    font-weight: bold !important;
+  }
+  .sect2 p{
+    font-weight: normal !important;
+  }
+  .sect3 p{
+    font-weight: normal !important;
+  }
+  .sect4 p{
+    font-weight: normal !important;
+  }
+  .section10 p{
+    display: flex;
+    justify-content: center !important;
+    font-size: 20px;
+    font-weight: normal !important;
+}
+.section10-2div{
+    margin-left: 40% !important;
+    width: 200px;
+    height: auto;
+}
+
+  
+  @keyframes animdiv {
+    0%   {left:0px; top:0px;}
+    25%  {left:20px; top:0px;}
+    50%  {left:20px; top:0px;}
+    100% {left:0px; top:0px;}
+}
+
+div .animdiv{
+    position: relative;
+    animation: animdiv 5s infinite;
+}
+
+  @media screen and (max-width:600px) {
+    .imggcol{
+        width:200px;
+        /* height: 300px; */
+        /* /* margin-top: -150px; */
+        margin-left: -160px !important; 
+    }
+    .section10-2div{
+        margin-left: 10% !important;
+        width:300px !important;
+    }
+    
+}
+@media screen and (max-width:900px) and (min-width:601px) {
+  .section10{
+      display: flex;
+      justify-content: center !important;
+  }
+  .section10-2div{
+      margin-left: 25% !important;
+      width:400px !important;
+  }
+}
+@media screen and (max-width:1200px) and (min-width:901px) {
+  .section10-2div{
+      margin-left: 30% !important;
+      width:400px !important;
+  }
+}
+
