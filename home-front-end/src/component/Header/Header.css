@@ -1,0 +1,41 @@
+.navList{
+    display: flex;
+    justify-content: right;
+    margin-left: 15%;
+}
+
+.navList ul li{
+    margin-left:20px !important;
+    text-decoration: none;
+}
+
+.navList ul li:hover{
+    text-decoration: underline !important;
+    transition: 0.5s ease-in-out;
+    translate: 5px !important;
+}
+.section1 h2,p{
+    font-family: 'Arial';
+    font-weight: bold !important;
+}
+
+@keyframes animdiv {
+    0%   {left:0px; top:0px;}
+    25%  {left:50px; top:0px;}
+    50%  {left:50px; top:0px;}
+    100% {left:0px; top:0px;}
+}
+
+div .animdiv{
+    position: relative;
+    animation: animdiv 1s infinite;
+}
+
+@media screen and (max-width:600px) {
+    .animdiv img{
+        width:500px !important;
+        margin-left: 150px !important; 
+        position: relative;
+        top: 0;
+    }
+}

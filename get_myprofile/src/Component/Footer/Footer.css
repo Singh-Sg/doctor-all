@@ -1,0 +1,27 @@
+.footer{
+    background-color: darkblue;
+    color: white;
+    padding:100px 50px;
+}
+.hr-footer {
+    background-color: white !important;
+    border: 2px solid white !important;
+}
+.butt{
+    width: 250px;
+    height: 60px !important;
+    background-color: darkblue;
+    color: white;
+    border-color: white;
+    border-width: 3px;
+    border-radius: 8px;  
+    font-weight: bold;
+    padding: 15px 20px;
+    background-color: transparent;
+}
+p:hover{
+    font-weight: bold;
+}
+h5:hover,.hr-footer:hover{
+    font-weight: bold;
+}

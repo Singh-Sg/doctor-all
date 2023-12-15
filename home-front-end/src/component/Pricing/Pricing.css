@@ -1,0 +1,59 @@
+@keyframes animdiv {
+    0%   {left:0px; top:0px;}
+    25%  {left:20px; top:0px;}
+    50%  {left:20px; top:0px;}
+    100% {left:0px; top:0px;}
+}
+
+div .animdiv{
+    position: relative;
+    animation: animdiv 5s infinite;
+}
+.section1 p{
+    font-weight: normal !important;
+}
+.pricingSect2 p{
+    font-weight: normal !important;
+}
+
+.section10 p{
+    display: flex;
+    justify-content: center !important;
+    font-size: 20px;
+    font-weight: normal !important;
+}
+.section10-2div{
+    margin-left: 40% !important;
+    width: 200px;
+    height: auto;
+}
+
+
+@media screen and (max-width:600px) {
+    .imggcol{
+        width: 200px;
+        /* height: 160px; */
+        /* /* margin-top: -150px; */
+        margin-left: -160px !important; 
+    }   
+    .section10-2div{
+        margin-left: 10% !important;
+        width:300px !important;
+    }
+}
+@media screen and (max-width:900px) and (min-width:601px) {
+    .section10{
+        display: flex;
+        justify-content: center !important;
+    }
+    .section10-2div{
+        margin-left: 25% !important;
+        width:400px !important;
+    }
+}
+@media screen and (max-width:1200px) and (min-width:901px) {
+    .section10-2div{
+        margin-left: 30% !important;
+        width:400px !important;
+    }
+}

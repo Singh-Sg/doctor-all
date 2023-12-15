@@ -1,0 +1,38 @@
+@keyframes animdiv {
+    0%   {left:0px; top:0px;}
+    25%  {left:20px; top:0px;}
+    50%  {left:20px; top:0px;}
+    100% {left:0px; top:0px;}
+}
+
+div .animdiv{
+    position: relative;
+    animation: animdiv 5s infinite;
+}
+.sec2 p{
+    font-size: 20px;
+    font-weight: normal !important;
+}
+.sec3 p{
+    font-size: 20px;
+    font-weight: normal !important;
+}
+.sec4 p{
+    font-size: 20px;
+    font-weight: normal !important;
+}
+.sec4 .paragsecp{
+    font-size: 17px;
+    font-weight: normal !important;
+}
+.Patientcrsl .paracas{
+    font-size: 16px;
+    font-weight: normal !important;
+}
+
+@media screen and (max-width:600px) {
+    .imggcol{
+        width:200px;
+        margin-left: -160px !important; 
+    }
+}

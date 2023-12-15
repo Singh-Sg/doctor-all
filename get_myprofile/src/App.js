@@ -8,6 +8,7 @@ import AboutMe from './Component/AboutMe/AboutMe';
 import Faqs from './Component/Faqs/Faqs';
 import Foot from './Component/Foot/Foot';
 import BookAppoint from './Component/BookAppoint/BookAppoint';
+import ChangeSlote from './Component/ChangeSlote/ChangeSlote';
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
           <Route path='/treatments' element={<Treatments />}></Route>
           <Route path='/health-blogs' element={<HealthBlogs />}></Route>
           <Route path='/book-appoint' element={<BookAppoint />}></Route>
+          <Route path='/change-slote' element={<ChangeSlote/>}></Route>
         </Routes>
         <Faqs />
         <Foot />
