@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import rating from '../MyImg/rating.png';
 import img1 from '../MyImg/img1.webp'
 import img2 from '../MyImg/img2.webp'
@@ -21,7 +21,7 @@ export default function Section() {
     return (
         <div>
             {/* section two  */}
-            <div /*className='container-fluid'*/ style={{ backgroundColor: 'white', color: '#0049B7' }}>
+            <div style={{ backgroundColor: 'white', color: '#0049B7' }}>
                 <div className='container'>
                     <br />
                     <br />
@@ -132,126 +132,11 @@ export default function Section() {
                     <br />
                     <hr />
                     <br />
-                    {/* ********************************************* */}
                     <div className='section5'>
                         <h1 className='h1 text-secondary d-flex justify-content-center' style={{ fontFamily: 'Arial', fontWeight: 'bold' }}>How your Practice Grows with Doctors Do</h1>
                         <br />
                         <br />
-                        {/* </div> */}
-                        {/* second curosel  start*/}
-                        {/* <div id="carouselExampleCaptions" className="carousel slide">
-                            <div className="carousel-indicators">
-                                <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" className='active' aria-label="Slide 1" aria-current="true"></button>
-                                <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1" aria-label="Slide 2"></button>
-                                <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2" aria-label="Slide 3"></button>
-                            </div>
-                            <div className="carousel-inner">
-                                <div className='carousel-item'>
-                                    <div class="row row-cols-1 row-cols-md-3 g-4">
-                                        <div class="col">
-                                            <div class="card h-100">
-                                                <img src="https://uploads-ssl.webflow.com/614df4079de73097e28b8431/615efed1f79ad94afb7dc856_integrated-care-for-better-experience.jpg" class="card-img-top" alt="..." />
-                                                <div class="card-body">
-                                                    <h5 class="card-title">Integrated care for better experience</h5>
-                                                    <p class="card-text">Doctors Do lets you book In-clinic as well as Video or audio consultations with your doctor right from your phone.</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col">
-                                            <div class="card h-100">
-                                                <img src="https://uploads-ssl.webflow.com/614df4079de73097e28b8431/615eff046105b4e079260b15_defeat-your-chronic-condition.jpg" class="card-img-top" alt="..." />
-                                                <div class="card-body">
-                                                    <h5 class="card-title">Defeat your chronic condition</h5>
-                                                    <p class="card-text">Doctors Do's D.I.S.H.A care plans work along with your doctor's treatment to guide you on dietary changes, easy to do exercises and help you understand your condition so you can move towards better health</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col">
-                                            <div class="card h-100">
-                                                <img src="https://uploads-ssl.webflow.com/614df4079de73097e28b8431/615eff4b3a5d745b6c049000_constant-engagement-with-doctor.jpg" class="card-img-top" alt="..." />
-                                                <div class="card-body">
-                                                    <h5 class="card-title">Constant engagement with doctor</h5>
-                                                    <p class="card-text">Never forget a follow-up appointment with your doctor. Whether it's to share your reports, ask a question or book a consult, Doctors Do gives you the comfort that your doctor cares for you</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className='carousel-item' >
-                                    <div class="row row-cols-1 row-cols-md-3 g-4">
-                                        <div class="col">
-                                            <div class="card h-100">
-                                                <img src="https://uploads-ssl.webflow.com/614df4079de73097e28b8431/615efed1f79ad94afb7dc856_integrated-care-for-better-experience.jpg" class="card-img-top" alt="..." />
-                                                <div class="card-body">
-                                                    <h5 class="card-title">Integrated care for better experience</h5>
-                                                    <p class="card-text">Doctors Do lets you book In-clinic as well as Video or audio consultations with your doctor right from your phone.</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col">
-                                            <div class="card h-100">
-                                                <img src="https://uploads-ssl.webflow.com/614df4079de73097e28b8431/615eff046105b4e079260b15_defeat-your-chronic-condition.jpg" class="card-img-top" alt="..." />
-                                                <div class="card-body">
-                                                    <h5 class="card-title">Defeat your chronic condition</h5>
-                                                    <p class="card-text">Doctors Do's D.I.S.H.A care plans work along with your doctor's treatment to guide you on dietary changes, easy to do exercises and help you understand your condition so you can move towards better health</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col">
-                                            <div class="card h-100">
-                                                <img src="https://uploads-ssl.webflow.com/614df4079de73097e28b8431/615eff4b3a5d745b6c049000_constant-engagement-with-doctor.jpg" class="card-img-top" alt="..." />
-                                                <div class="card-body">
-                                                    <h5 class="card-title">Constant engagement with doctor</h5>
-                                                    <p class="card-text">Never forget a follow-up appointment with your doctor. Whether it's to share your reports, ask a question or book a consult, Doctors Do gives you the comfort that your doctor cares for you</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className='carousel-item' >
-                                    <div class="row row-cols-1 row-cols-md-3 g-4">
-                                        <div class="col">
-                                            <div class="card h-100">
-                                                <img src="https://uploads-ssl.webflow.com/614df4079de73097e28b8431/615efed1f79ad94afb7dc856_integrated-care-for-better-experience.jpg" class="card-img-top" alt="..." />
-                                                <div class="card-body">
-                                                    <h5 class="card-title">Integrated care for better experience</h5>
-                                                    <p class="card-text">Doctors Do lets you book In-clinic as well as Video or audio consultations with your doctor right from your phone.</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col">
-                                            <div class="card h-100">
-                                                <img src="https://uploads-ssl.webflow.com/614df4079de73097e28b8431/615eff046105b4e079260b15_defeat-your-chronic-condition.jpg" class="card-img-top" alt="..." />
-                                                <div class="card-body">
-                                                    <h5 class="card-title">Defeat your chronic condition</h5>
-                                                    <p class="card-text">Doctors Do D.I.S.H.A care plans work along with your doctor's treatment to guide you on dietary changes, easy to do exercises and help you understand your condition so you can move towards better health</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="col">
-                                            <div class="card h-100">
-                                                <img src="https://uploads-ssl.webflow.com/614df4079de73097e28b8431/615eff4b3a5d745b6c049000_constant-engagement-with-doctor.jpg" class="card-img-top" alt="..." />
-                                                <div class="card-body">
-                                                    <h5 class="card-title">Constant engagement with doctor</h5>
-                                                    <p class="card-text">Never forget a follow-up appointment with your doctor. Whether it's to share your reports, ask a question or book a consult, Doctors Do gives you the comfort that your doctor cares for you</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <button className="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
-                                <span className="carousel-control-prev-icon" aria-hidden="true"></span>
-                                <span className="visually-hidden">Previous</span>
-                            </button>
-                            <button className="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="next">
-                                <span className="carousel-control-next-icon" aria-hidden="true"></span>
-                                <span className="visually-hidden">Next</span>
-                            </button>
-                        </div> */}
                     </div>
-                    {/* second curosel end */}
-                    {/* ********************************************** */}
                     <div className='section6'>
                         <div className='row'>
                             <div className='col-sm-12 col-md-6 col-lg-6 text-muted' style={{ marginTop: '50px' }}>
