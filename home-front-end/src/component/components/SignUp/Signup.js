@@ -1,9 +1,8 @@
 import Swal from 'sweetalert2'
 import React, { useState } from 'react';
-
+import { Link, useNavigate } from 'react-router-dom';
 import './Signup.css';
 import axios from "axios";
-
 
 export default function Signup() {
 
@@ -30,6 +29,7 @@ export default function Signup() {
       profile: ''
     }
   );
+  const userSignin=useNavigate();
 
   // http://127.0.0.1:8000/api/doctor/register/     1st api.
   // http://127.0.0.1:8000/api/doctor/              2nd api.
@@ -48,8 +48,7 @@ export default function Signup() {
   }
 
   const validateForm = () => {
-    var nm = /^[A-Za-z]+$/;   //name validation...
-    // var pw = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{8,15}$/;  //password validation...
+    var nm = /^[A-Za-z]+$/;
 
     const newErrors = {};
     if (!userData.email) {
@@ -61,9 +60,6 @@ export default function Signup() {
     else if (userData.email.indexOf('@') > userData.email.lastIndexOf('.')) {
       newErrors.email = 'Invalid Email format';
     }
-    // if (!userData.full_name) {
-    //   newErrors.full_name = 'Name is required';
-    // }
     if (!userData.first_name || userData.first_name.trim() === '') {
       newErrors.full_name = 'Full Name is required';
     } else if (!/^[a-zA-Z\s]+$/.test(userData.first_name)) {
@@ -79,76 +75,56 @@ export default function Signup() {
     } else if (userData.last_name.length < 3) {
       newErrors.full_name = 'Full Name must be long';
     }
-
     if (!userData.username) {
       newErrors.username = 'User Name is required';
     }
     else if (!userData.username.match(nm)) {
       newErrors.username = "User Name is not valid";
     }
-
     if (!userData.specialty) {
       newErrors.specialty = 'Specialty is required';
     }
-    // else if (!userData.specialty.match(nm)) {
-    //   newErrors.specialty = "Specialty is not valid";
-    // }
-
     if (!userData.video_fee) {
       newErrors.video_fee = 'Video Fee is required';
     }
-
     if (!userData.audio_fee) {
       newErrors.audio_fee = 'Audio Fee is required';
     }
-
     if (!userData.hospital) {
       newErrors.hospital = 'Hospital is required';
     }
-
     if (!userData.address) {
       newErrors.address = 'Address is required';
     }
-
     if (!userData.education) {
       newErrors.education = 'Education is required';
     }
-
     if (!userData.experience) {
       newErrors.experience = 'Experience is required';
     }
-
     if (!userData.in_clinic_fee) {
       newErrors.in_clinic_fee = 'Clinic Fee is required';
     }
-
     if (!userData.phone_number) {
       newErrors.phone_number = 'Phone Number is required';
     } else if (!userData.phone_number.length === 10) {
       newErrors.phone_number = 'Enter 10 Digit Valid Phone Number';
     }
-
     if (!userData.password) {
       newErrors.password = 'Password is required!';
     } else if (userData.password.length <= 8 || userData.password.length > 15) {
       newErrors.password = 'Password length must be between 8 and 15 characters!';
-      // } 
-      // else if (!userData.password.match(pw)) {
-      //   newErrors.pass = "invalid password... Hint= (?=.*a-zA-Z)";
     } else if (userData.password !== userData.confpass) {
       newErrors.confpass = 'Password did not match!';
     }
-
     if (!userData.confpass) {
       newErrors.confpass = 'Confirm Password is required';
     } else if (userData.confpass.length <= 8 || userData.confpass.length > 15) {
       newErrors.confpass = 'Confirm Password length must be between 8 and 15 characters';
     }
-
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
-
   //   post data...
   function createDoctor(e) {
     const formData = new FormData();
@@ -165,21 +141,20 @@ export default function Signup() {
     formData.append('audio_fee', userData.audio_fee);
     formData.append('profile', userData.profile);
 
-    if(validateForm()){
-    axios.post(`http://127.0.0.1:8000/api/doctor/`, formData)
-      .then((res) => {
-        console.log(res.data);
-        debugger
-      })
-    .catch((error) => {
-      console.log('api error', error)
-    })
+    if (validateForm()) {
+      axios.post(`http://127.0.0.1:8000/api/doctor//`, formData)
+        .then((res) => {
+          console.log(res.data);
+          debugger
+        })
+        .catch((error) => {
+          console.log('api error', error)
+        })
+    }
   }
-}
 
   function createUserDoctor(e) {
     e.preventDefault();
-
     const formData = new FormData();
     formData.append('email', userData.email);
     formData.append('username', userData.username);
@@ -194,11 +169,8 @@ export default function Signup() {
           debugger
           createDoctor(res.data.user.id)
           successAlert();
+          userSignin('/signin');
         })
-        // }
-        // else {
-        //   InvaliAlert();
-        // }
         .catch((error) => {
           debugger
           console.log('api error', InvaliAlert(error))
@@ -207,13 +179,7 @@ export default function Signup() {
     else {
       InvaliAlert();
     }
-
   }
-  // const RemoveMsg = (e) => {
-  //   // const name = e.target.name;
-  //   // setErrors({ ...errors, name: '' });
-  //   document.getElementById("paraValid").style.display ="none";
-  // }
 
   let successAlert = () => {
     Swal.fire({
@@ -234,25 +200,21 @@ export default function Signup() {
 
   return (
     <div className='signBody'>
-      {/* header start here */}
       <div className='Header'>
         <div className='container'>
           <div style={{ display: "flex", justifyContent: "space-between" }}>
             <h1 className='h1 text-primary'>Doctor Do</h1>
-            <p className='text-secondary'
+            <p className='text-secondary cndt'
               style={{ margin: "auto 0" }}
             >
               Already Registered?
               <span className='text-primary'>
-                <b>Login</b>
+                <b><Link style={{ textDecoration: 'none', color: 'darkblue' }} to='/signin'>Login</Link></b>
               </span>
               here</p>
           </div>
         </div>
       </div>
-      {/* header end here */}
-
-      {/* section one here*/}
       <div className='container'>
         <div className='section_one'>
           <div className='row'>
@@ -260,8 +222,7 @@ export default function Signup() {
               <div className='aside_one text-center'>
                 <br />
                 <h5><b>Profile</b></h5>
-                {/* <img src="//static.naukimg.com/s/7/104/assets/images/white-boy.a0d2814a.png" alt="Doctor's Do" /> */}
-                <img src={userData.profile ? URL.createObjectURL(userData.profile) : "//static.naukimg.com/s/7/104/assets/images/white-boy.a0d2814a.png"} alt="Doctor's Do" />
+                <img src={userData.profile ? URL.createObjectURL(userData.profile) : "//static.naukimg.com/s/7/104/assets/images/white-boy.a0d2814a.png"} alt="Doctors Do" />
                 <br />
                 <br />
                 <input
@@ -351,9 +312,6 @@ export default function Signup() {
                       {errors.confpass && <p className='paraValid' style={{ color: "red" }}>{errors.confpass}</p>}
                     </div>
                   </div>
-                  {/* </form> */}
-                  {/*  */}
-                  {/* <form className='form'> */}
                   <div className='mb-3 row'>
                     <div className='col-sm-12 col-md-12 col-lg-12'>
                       <label htmlFor='specialty'>Specialty</label>
@@ -481,7 +439,7 @@ export default function Signup() {
                     </div>
                   </div>
                   <br />
-                  <p>
+                  <p className='cndt'>
                     <small>By clicking Register, you agree to the
                       <span className='text-primary'>Terms and Conditions</span>
                       & <span className='text-primary'>Privacy Policy</span>
@@ -502,7 +460,6 @@ export default function Signup() {
       </div>
       <br />
       <br />
-      {/* section one end here */}
     </div>
   )
 }
