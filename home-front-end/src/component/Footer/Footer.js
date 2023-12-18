@@ -9,6 +9,7 @@ import LocalPhoneIcon from '@mui/icons-material/LocalPhone';
 import EmailIcon from '@mui/icons-material/Email';
 import PhoneAndroidIcon from '@mui/icons-material/PhoneAndroid';
 import LocationOnIcon from '@mui/icons-material/LocationOn';
+import {Link} from 'react-router-dom';
 
 export default function Footer() {
     return (
@@ -28,10 +29,11 @@ export default function Footer() {
                         </div>
                         <div className='col-sm-12 col-md-3 col-lg-3'>
                             <h4>Quick Links</h4>
-                            <p>Home</p>
-                            <p>Features</p>
-                            <p>Blog</p>
-                            <p>For Patients</p>
+                            <Link to='/' target='_top' style={{textDecoration:'none',color:'white'}}><p>Home</p></Link>
+                            <Link to='/features' target='_top' style={{textDecoration:'none',color:'white'}}><p>Features</p></Link>
+                            <Link to='/pricing' target='_top' style={{textDecoration:'none',color:'white'}}><p>Pricing</p></Link>
+                            <Link to='/blog' target='_top' style={{textDecoration:'none',color:'white'}}><p>Blog</p></Link>
+                            <Link to='/patient' target='_top' style={{textDecoration:'none',color:'white'}}><p>For Patients</p></Link>
                         </div>
                         <div className='col-sm-12 col-md-3 col-lg-3'>
                             <h4>Get the APP</h4>

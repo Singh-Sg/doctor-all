@@ -13,6 +13,9 @@ p{
     justify-content: left !important;
     font-weight: normal !important;
 }
+p:hover{
+    font-weight: bold !important;
+}
 .secPrivPol p{
     display: flex;
     justify-content: right !important;   
