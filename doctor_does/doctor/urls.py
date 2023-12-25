@@ -2,7 +2,7 @@ from django.urls import path
 from django.contrib import admin
 from django.urls import path, include
 from rest_framework_simplejwt import views as jwt_views
-from .views import DoctorAPI, RegisterApi, DoctorTreatmentAPI
+from .views import DoctorAPI, RegisterApi, DoctorTreatmentAPI, DoctorBlogApi
 
 urlpatterns = [
     path("token/", jwt_views.TokenObtainPairView.as_view(), name="token_obtain_pair"),
@@ -14,4 +14,5 @@ urlpatterns = [
     path(
         "treatment/<int:id>/", DoctorTreatmentAPI.as_view(), name="doctor_treatment_obj"
     ),
+    path("blog/", DoctorBlogApi.as_view(), name="doctor_blog"),
 ]

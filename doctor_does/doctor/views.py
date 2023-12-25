@@ -1,6 +1,6 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from .models import Doctor, Treatments, DoctorTreatments
+from .models import *
 from rest_framework import status
 from rest_framework import generics
 from .serializer import (
@@ -9,6 +9,7 @@ from .serializer import (
     DoctorSerializer,
     TreatmentsSerializer,
     DoctorTreatmentsSerializer,
+    DoctorBlogSerializer
 )
 
 from django.shortcuts import get_object_or_404
@@ -144,6 +145,70 @@ class DoctorTreatmentAPI(APIView):
                 serializer.save()
                 return Response(serializer.data, status=status.HTTP_200_OK)
 
+        return Response(
+            {"error": "Object not found"},
+            status=status.HTTP_404_NOT_FOUND
+        )
+
+
+class DoctorBlogApi(APIView):
+    def get(self, request, id=None):
+        try:
+            if id is not None:
+                doctor_blog_obj = get_object_or_404(DoctorBlog, id=id)
+                doctor_blog_serializer = DoctorBlogSerializer(doctor_blog_obj)
+                return Response(doctor_blog_serializer.data, status=status.HTTP_200_OK)
+            doctor_blog = DoctorBlog.objects.all()
+            doctor_blog_serializer = DoctorBlogSerializer(
+                doctor_blog, many=True)
+            return Response(doctor_blog_serializer.data, status=status.HTTP_200_OK)
+        except Exception as e:
+            return Response(
+                {"error": str(e)},
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR
+            )
+
+    def post(self, request, format=None):
+        try:
+            doctor_blog_serializer = DoctorBlogSerializer(data=request.data)
+            doctor_blog_serializer.is_valid(raise_exception=True)
+            doctor_blog_serializer.save()
+            return Response(doctor_blog_serializer.data, status=status.HTTP_201_CREATED)
+        except doctor_blog_serializer.ValidationError as e:
+            return Response(
+                {"error": str(e)},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+        except Exception as e:
+            return Response(
+                {"error": str(e)},
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR
+            )
+
+    def patch(self, request, id=None):
+        doctor_blog_obj = get_object_or_404(DoctorBlog, id=id)
+        if doctor_blog_obj:
+            serializer = DoctorBlogSerializer(
+                doctor_blog_obj, data=request.data, partial=True)
+            try:
+                if serializer.is_valid(raise_exception=True):
+                    serializer.save()
+                    return Response(serializer.data, status=status.HTTP_200_OK)
+            except serializer.ValidationError as e:
+                return Response(
+                    {"error": str(e)},
+                    status=status.HTTP_400_BAD_REQUEST
+                )
+        return Response(
+            {"error": "Object not found"},
+            status=status.HTTP_404_NOT_FOUND
+        )
+
+    def delete(self, request, id=None):
+        doctor_blog_obj = get_object_or_404(DoctorBlog, id=id)
+        if doctor_blog_obj:
+            doctor_blog_obj.delete()
+            return Response({"message": "Object deleted successfully"}, status=status.HTTP_204_NO_CONTENT)
         return Response(
             {"error": "Object not found"},
             status=status.HTTP_404_NOT_FOUND
