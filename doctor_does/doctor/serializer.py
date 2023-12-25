@@ -80,3 +80,8 @@ class DoctorTreatmentsSerializer(serializers.ModelSerializer):
     class Meta:
         model = DoctorTreatments
         fields = "__all__"
+
+class DoctorBlogSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = DoctorTreatments
+        fields = "__all__"
