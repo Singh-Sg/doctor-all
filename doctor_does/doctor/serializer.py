@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Doctor, Treatments, DoctorTreatments
+from .models import Doctor, Treatments, DoctorTreatments, DoctorBlog
 from django.contrib.auth.models import User
 
 
@@ -8,7 +8,7 @@ class RegisterSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = (
-            "id",
+            # "id",
             "username",
             "password",
             "first_name",
@@ -83,5 +83,5 @@ class DoctorTreatmentsSerializer(serializers.ModelSerializer):
 
 class DoctorBlogSerializer(serializers.ModelSerializer):
     class Meta:
-        model = DoctorTreatments
+        model = DoctorBlog
         fields = "__all__"

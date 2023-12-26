@@ -36,7 +36,7 @@ schema_view = get_schema_view(
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path("api/doctor", include("doctor.urls")),
+    path("api/doctor/", include("doctor.urls")),
     path("api/treatment/", TreatmentAPI.as_view(), name="treatment"),
     path("api/treatment/<int:id>/", TreatmentAPI.as_view(), name="treatment_obj"),
     path(
