@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     "doctor",
     "rest_framework_swagger",
     "drf_yasg",
+    "patient"
 ]
 
 MIDDLEWARE = [

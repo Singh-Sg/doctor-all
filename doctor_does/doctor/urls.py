@@ -15,4 +15,7 @@ urlpatterns = [
         "treatment/<int:id>/", DoctorTreatmentAPI.as_view(), name="doctor_treatment_obj"
     ),
     path("blog/", DoctorBlogApi.as_view(), name="doctor_blog"),
+
+    path('api/', include("patient.urls")),
+
 ]
