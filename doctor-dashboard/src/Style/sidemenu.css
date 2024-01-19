@@ -1,0 +1,48 @@
+  .CrdVariant{
+    width:95%;
+  }
+  .CardVarSix{
+    width: 95%;
+  }
+  .CardVarSixT{
+    width: 95%;
+    margin-left: 5%;
+  }
+  .TypoPara{
+   /* mb: "1.5" */
+   margin-bottom: 1.5;
+  }
+  .MainLeftDash{
+    background-color: #98A8F8;
+    color:white;
+    border: none !important;
+  }
+  .listItem{
+    color: white !important;
+  }
+  .BoxSect{
+    display: flex;
+    /* border: none !important; */
+    border: none !important;
+  }
+  .ModeIcn{
+    background-color: transparent;
+    border: none;
+    color: white;
+  }
+  .drnameText{
+    padding: 10px 10px;
+  }
+  .userIcn{
+    margin-left: 2;
+  }
+  .dashLink{
+    border: none;
+    text-decoration: none;
+    color: white;
+    width:100%;
+  }
+  .Prof{ 
+    color:black;
+    text-decoration: none;
+  }

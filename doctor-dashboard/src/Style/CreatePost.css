@@ -1,0 +1,44 @@
+.FirstBox{
+    width: 100%;
+}
+/* .SecBox{ 
+    border-bottom: 1%; 
+    border-color: 'divider' 
+} */
+.FControl{
+    margin: 1%;
+}
+.FourthBox{
+    display:flex;
+    justify-content:space-between
+}
+.BtnWth{ 
+    width: 25%;
+    padding: 1%;
+}
+.artPage{
+    display: flex;
+    justify-content: center;
+}
+.articon{
+    width: 110%;
+    height:200px;
+    padding: auto;
+    /* margin-top: -16px; */
+    margin-left: -12px;
+    /* margin-right: -20px;  */
+}
+.articleiconDiv{
+    padding:0px;
+}
+/* .BtnWthArt{
+
+} */
+.CrdPadding1:hover{
+    .articon{
+        width:112%;
+        margin-top: -2px;
+        margin-left: -px;
+        height: 202px;
+    }
+}

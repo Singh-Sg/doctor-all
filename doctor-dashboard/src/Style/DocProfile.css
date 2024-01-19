@@ -1,0 +1,46 @@
+.FeeStr{
+    box-shadow: 8px 8px 8px solid lightblue,8px 8px 8px solid lightblue;
+    font-family: Arial, Helvetica, sans-serif;
+}
+.FirstBox{
+    display: flex;
+    flex-direction: column;
+    justify-content: end;
+}
+.Aboutgrd{
+    /* color: darkolivegreen; */
+    color: darkslateblue;
+}
+.AboutText{
+    /* color: Bla; */
+    font-family: Arial, Helvetica, sans-serif;
+    /* border-bottom: 4px solid darkolivegreen; */
+}
+/* .MainDrDiv{ */
+    /* background-color: rgb(238, 252, 252); */
+    /* border-radius: 8px; */
+    /* box-shadow: 5px 5px 5px 5px lightgray, 5px 5px 5px 5px lightgray; */
+/* } */
+.cardact{
+    display: flex;
+    justify-content: end;
+}
+.BordBox{
+    box-shadow: none !important;
+}
+.BlrPr{
+    border: 8px solid rgb(48, 156, 219);
+}
+.ShrPr{
+    border:8px solid rgb(48, 156, 219);
+}
+.styleButton{
+    margin-top: -20px;
+    display: flex;
+    justify-content: end;
+}
+.CrtIcn{
+    margin-top: -25px;
+    display: flex;
+    justify-content: end;
+}

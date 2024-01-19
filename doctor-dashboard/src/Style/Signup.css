@@ -1,0 +1,37 @@
+.boxContainer{
+    display: flex;
+    justify-content: center;
+}
+/* .HeadPara{
+    display: flex;
+    justify-content: end;
+} */
+.formSignin{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 80px;
+    border-radius: 8px;
+    padding: 50px;
+    box-shadow: 8px 8px 8px 4px darkgray,8px 8px 8px 4px darkgray;
+    background-color: rgba(215, 237, 244, 0.584);
+}
+.IFWidth {
+    width: 440px;
+}
+/* @media screen and (max-width:600px) {
+    .IFWidth{
+        width:440px;
+    }
+}
+@media screen and (max-width:900px) and (min-width:601px) {
+    .IFWidth{
+        width:440px;
+        margin-left: 50px;
+    }
+}
+@media screen and (max-width:1200px) and (min-width:901px) {
+    .IFWidth{
+        width:440px;
+    }
+} */

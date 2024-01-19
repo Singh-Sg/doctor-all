@@ -1,0 +1,41 @@
+.treaticonDiv{
+    display: flex;
+    justify-content: center;
+}
+.treaticon{
+    width: 150px !important;
+    height: 150px !important;
+
+}
+.treatimage{
+    width: 100% !important;
+    height: auto !important;
+    display: flex;
+    justify-content: center !important;
+}
+/* .modelCenter{
+    display: flex;
+    justify-content: center;
+} */
+.DiaglogWidth{
+    width: 100% !important;
+    height: auto !important;
+}
+.CrdPadding{
+    padding: 20px 20px !important;
+    border-radius: 12px;
+    /* display: flex; */
+    /* justify-content: space-around; */
+}
+.cardCont{
+    display: flex;
+    justify-content: center;
+    /* width:700px; */
+}
+.cardCont1{
+    width: 600px;
+}
+/* .BtnWth{ 
+    width: 45%;
+    padding: 1%;
+} */
