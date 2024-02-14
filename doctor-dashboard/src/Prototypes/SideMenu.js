@@ -1,4 +1,3 @@
-// import * as React from 'react';
 import React, { useState, useEffect } from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
@@ -6,13 +5,11 @@ import CssBaseline from '@mui/material/CssBaseline';
 import Divider from '@mui/material/Divider';
 import Drawer from '@mui/material/Drawer';
 import IconButton from '@mui/material/IconButton';
-// import InboxIcon from '@mui/icons-material/MoveToInbox';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-// import MailIcon from '@mui/icons-material/Mail';
 import MenuIcon from '@mui/icons-material/Menu';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
@@ -23,23 +20,8 @@ import Stack from '@mui/material/Stack';
 import { SetProf, drToggleOpen, MainSection } from './styles.js';
 import SettingsIcon from '@mui/icons-material/Settings';
 import NotificationsActiveIcon from '@mui/icons-material/NotificationsActive';
-// import Paper from '@mui/material/Paper';
-// import Card from '@mui/material/Card';
-// import CardActions from '@mui/material/CardActions';
-// import CardContent from '@mui/material/CardContent';
-// import Button from '@mui/material/Button';
-import { cardRow, SchedTabBody, PatTabBody, BoxSearch, SearchTextField, AppBarStyle, drnamegrd, MenuDrpDown, navComp, drToggle } from './styles.js'
+import { cardRow, SchedTabBody, PatTabBody, BoxSearch, SearchTextField, AppBarStyle, drnamegrd, MenuDrpDown, navComp, drToggle, RotateBord } from './styles.js'
 import { Grid } from '@mui/material';
-// import Table from '@mui/material/Table';
-// import TableBody from '@mui/material/TableBody';
-// import TableCell from '@mui/material/TableCell';
-// import TableContainer from '@mui/material/TableContainer';
-// import TableHead from '@mui/material/TableHead';
-// import TableRow from '@mui/material/TableRow';
-// import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-// import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-// import { DateCalendar } from '@mui/x-date-pickers/DateCalendar';
-// import ColumnChart from '../charts/ColumnChart.js';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import Tooltip from '@mui/material/Tooltip';
@@ -56,27 +38,13 @@ import MultilineChartIcon from '@mui/icons-material/MultilineChart';
 import AddchartIcon from '@mui/icons-material/Addchart';
 import DirectionsIcon from '@mui/icons-material/Directions';
 import TodayIcon from '@mui/icons-material/Today';
-// import NightlightIcon from '@mui/icons-material/Nightlight';
 import '../Style/sidemenu.css'
-// import { grey, lightBlue } from 'material-ui-colors';
-// import InputLabel from '@mui/material/InputLabel';
-// import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import AOS from 'aos';
 import CircleIcon from '@mui/icons-material/Circle';
 import { Link, Outlet, useNavigate } from 'react-router-dom';
-// import ColorLensIcon from '@mui/icons-material/ColorLens';
 import axios from 'axios';
-
-// const bull = (
-//     <Box
-//         component="span"
-//         sx={{ display: 'inline-block', mx: '2px', transform: 'scale(0.8)' }}
-//     >
-//         •
-//     </Box>
-// );
 
 function createData(name, Ward, Priority, StartDate, EndDate,) {
     return {
@@ -112,6 +80,7 @@ export default function SideMenu(props) {
     const [mobileOpen, setMobileOpen] = React.useState(false);
     const [token, setToken] = useState(localStorage.getItem('token'));
     const [DocProfile, setDocProfile] = useState('');
+    const [hoverC, setHoverC] = useState(false);
 
     const navigation = useNavigate()
 
@@ -141,6 +110,7 @@ export default function SideMenu(props) {
             dashes[i].style.backgroundColor = theme;
         }
     }, [theme]);
+
     useEffect(() => {
         AOS.init();
     }, [])
@@ -154,19 +124,20 @@ export default function SideMenu(props) {
         // navigation('')
         // }
     })
+    // useEffect(() => {
+    //     if (localStorage.getItem('token') === "" || localStorage.getItem('token') === null) {
+    //         navigation("/");
+    //     }
+    // })
     const GetData = () => {
         const headers = {
             'Authorization': `Bearer ${token}`,
         };
-        // debugger
         axios.get(`http://127.0.0.1:8000/api/doctor`, { headers: headers })
             .then((res) => {
-                // debugger
-                console.log(res.data);
                 setDocProfile(res.data);
             })
             .catch((error) => {
-                // debugger
                 if (error.response.data.code === 'token_not_valid') {
                     // alert('Given token is not valid for any token type')
                     navigation("/")
@@ -187,6 +158,29 @@ export default function SideMenu(props) {
         setAnchorEl(null);
     };
 
+    const ThemeChange = (e) => {
+        setHoverC(true);
+        const setcl = document.querySelectorAll('.showCl');
+        setcl.forEach((element) => {
+            element.style.transition = 'width 3s ease-in-out';
+        });
+    };
+
+    const ThemeChangeC = (e) => {
+        setHoverC(false);
+        const setcl1 = document.querySelectorAll('.showCl1');
+        setcl1.forEach((element) => {
+            element.style.display = 'none';
+        });
+    };
+    const handleChangeV = (e) => {
+        setTheme(e.currentTarget.getAttribute('data-value'));
+    };
+
+    const handleOut=()=>{
+        localStorage.removeItem('token');
+        // localStorage.removeItem('refersh_token');
+    }
     // -----------------//
 
     // const [dir, setDir] = React.useState({ right: false });
@@ -239,8 +233,8 @@ export default function SideMenu(props) {
         },
         {
             icons: <BookOnlineIcon />,
-            name: "Appointnent",
-            link: "/appointment"
+            name: "My Availability",
+            link: "/sidemenu/my-slots"
         },
         {
             icons: <DocumentScannerIcon />,
@@ -275,7 +269,7 @@ export default function SideMenu(props) {
         {
             icons: <TodayIcon />,
             name: "Calender",
-            link: "/calender"
+            link: "/sidemenu/calender"
         },
         {
             icons: <ScheduleIcon />,
@@ -284,7 +278,7 @@ export default function SideMenu(props) {
         }
     ]
     const drawer = (
-        <div className="MainLeftDash MLDash">
+        <div className="MainLeftDash MLDash" >
             <Typography variant="h4" noWrap component="div" sx={PrjName}>
                 Doctors Do
             </Typography>
@@ -293,12 +287,10 @@ export default function SideMenu(props) {
                 component="form"
                 sx={BoxSearch}
                 noValidate
-                autoComplete="off"
-            >
+                autoComplete="off">
                 <TextField
                     id="outlined-basic" label="Search" variant="outlined"
-                    sx={SearchTextField}
-                />
+                    sx={SearchTextField} />
             </Box>
             <Divider />
             <List>
@@ -327,8 +319,7 @@ export default function SideMenu(props) {
             <CssBaseline />
             <AppBar className='MLDash'
                 position="fixed"
-                sx={AppBarStyle}
-            >
+                sx={AppBarStyle}>
                 <Toolbar>
                     <Grid container>
                         <Grid item xs={6}>
@@ -355,42 +346,6 @@ export default function SideMenu(props) {
                                 {/* <button onClick={toggleMode} className='ModeIcn' >
                                     <NightlightIcon />
                                 </button> */}
-                                <Box sx={{ minWidth: 50 }}>
-                                    <FormControl fullWidth>
-                                        {/* <InputLabel id="demo-simple-select-label">Theme</InputLabel> */}
-                                        {/* <button id='demo-simple-select-label'><NightlightIcon/></button> */}
-                                        <Select
-                                            labelId="demo-simple-select-label"
-                                            id="demo-simple-select"
-                                            // multiple
-                                            sx={{ border: 'none', transform: 'rotate(90deg)' }}
-                                            value={theme}
-                                            label="Theme"
-                                            onChange={handleChange}
-                                        >
-                                            {/* <box sx={{transform: 'rotate(90deg)' }}> */}
-                                            <MenuItem value={'#116A7A'}><CircleIcon sx={{ color: 'lightblue' }} /></MenuItem>
-                                            <MenuItem value={'#116A7B'}><CircleIcon sx={{ color: 'blue' }} /></MenuItem>
-                                            <MenuItem value={'#3D3B40'}><CircleIcon sx={{ color: 'black' }} /></MenuItem>
-                                            <MenuItem value={'#FF90BC'}><CircleIcon sx={{ color: 'pink' }} /></MenuItem>
-                                            <MenuItem value={'#6DB9EF'}><CircleIcon sx={{ color: 'lightblue' }} /></MenuItem>
-                                            {/* </box> */}
-                                        </Select>
-                                    </FormControl>
-                                    {/* right open nav */}
-                                    {/* {['right'].map((anchor) => (
-                                        <Box key={anchor}>
-                                            <Button onClick={toggleDrawer(anchor, true)}>{anchor}</Button>
-                                            <Drawer
-                                                anchor={anchor}
-                                                open={dir[anchor]}
-                                                onClose={toggleDrawer(anchor, false)}
-                                            >
-                                                {list(anchor)}
-                                            </Drawer>
-                                        </Box>
-                                    ))} */}
-                                </Box>
                                 {/* <Button>
                                     <Avatar alt="Remy Sharp" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRrFrHvLcbedVGWnvUwGDRlTzxrtgGFaXe5uA&usqp=CAU" />
                                 </Button> */}
@@ -424,8 +379,7 @@ export default function SideMenu(props) {
                                         sx: { MenuDrpDown },
                                     }}
                                     transformOrigin={{ horizontal: 'right', vertical: 'top' }}
-                                    anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
-                                >
+                                    anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}>
                                     <Link to="/sidemenu/docprofile" className='Prof'><MenuItem onClick={handleClose}>
                                         {DocProfile.profile_image ?
                                             <Avatar alt='Doctor' src={`http://127.0.0.1:8000/${DocProfile.profile_image}`} />
@@ -448,7 +402,7 @@ export default function SideMenu(props) {
                                         </ListItemIcon>
                                         Settings
                                     </MenuItem>
-                                    <MenuItem onClick={handleClose}>
+                                    <MenuItem onClick={handleOut}>
                                         <ListItemIcon>
                                             <Logout fontSize="small" />
                                         </ListItemIcon>
@@ -487,185 +441,39 @@ export default function SideMenu(props) {
             <Box component="main" sx={MainSection
             }>
                 <Toolbar />
-                {/* <Toolbar /> */}
-                <Outlet />
-                {/* <Box sx={{ cardRow }}>
-                    <Grid container>
-                        <Grid item xs={6}>
-                            <Card variant="outlined" className="CardVarSix" data-aos="zoom-in" data-aos-duration="3000">
-                                <CardContent>
-                                    <Typography variant="h5" component="div" gutterBottom>Beds</Typography>
-                                    <hr />
-                                    <Typography variant="h5" component="div">86</Typography>
-                                    <Typography className='TypoPara' color="text.secondary">Available hospital bads</Typography>
-                                    <Card>
-                                        <ColumnChart />
-                                    </Card>
-                                </CardContent>
-                                <CardActions>
-                                    <Button size="small">Learn More</Button>
-                                </CardActions>
-                            </Card>
-                        </Grid>
-                        <Grid item xs={6}>
-                            <Card variant="outlined" className='CardVarSixT' data-aos="zoom-in" data-aos-duration="3000">
-                                <CardContent>
-                                    <Typography variant="h5" component="div" gutterBottom>Doctors</Typography>
-                                    <hr />
-                                    <Typography variant="h5" component="div">46</Typography>
-                                    <Typography className='TypoPara' color="text.secondary">Available Doctors</Typography>
-                                    <Card>
-                                        <ColumnChart />
-                                    </Card>
-                                </CardContent>
-                                <CardActions>
-                                    <Button size="small">Learn More</Button>
-                                </CardActions>
-                            </Card>
-                        </Grid>
-                    </Grid>
-                    <br />
-                    <br />
-                    <Grid container>
-                        <Grid item xs={6}>
-                            <Card variant="outlined" className='CardVarSix' data-aos="zoom-in" data-aos-duration="3000">
-                                <CardContent>
-                                    <Typography variant="h5" component="div" gutterBottom>Ambulances</Typography>
-                                    <hr />
-                                    <Typography variant="h5" component="div">
-                                        26
-                                    </Typography>
-                                    <Typography className='TypoPara' color="text.secondary">Available hospital Ambulances</Typography>
-                                    <Card>
-                                        <ColumnChart />
-                                    </Card>
-                                </CardContent>
-                                <CardActions>
-                                    <Button size="small">Learn More</Button>
-                                </CardActions>
-                            </Card>
-                        </Grid>
-                        <Grid item xs={6}>
-                            <Card variant="outlined" className='CardVarSixT' data-aos="zoom-in" data-aos-duration="3000">
-                                <CardContent>
-                                    <Typography variant="h5" component="div" gutterBottom>Working Track</Typography>
-                                    <hr />
-                                    <Typography variant="h5" component="div">29/12/2023</Typography>
-                                    <Typography className='TypoPara' color="text.secondary">16:26:00</Typography>
-                                    <Card>
-                                        <ColumnChart />
-                                    </Card>
-                                </CardContent>
-                                <CardActions>
-                                    <Button size="small">Learn More</Button>
-                                </CardActions>
-                            </Card>
-                        </Grid>
-                    </Grid>
-                </Box>
-                <br />
-                <br /> */}
-                {/* <Box sx={{ cardRow }}>
-                    <Grid container>
-                        <Grid item xs={8} >
-                            <Card variant="outlined" className="CrdVariant" data-aos="fade-right" data-aos-duration="3000">
-                                <CardContent>
-                                    <Typography variant='h5' color="text.secondary" gutterBottom>Patients</Typography>
-                                    <Typography className='TypoPara' color="text.secondary">This is your several Patient list</Typography>
-                                    <hr />
-                                    <Typography variant="h5" component="div">
-                                        <TableContainer component={Paper}>
-                                            <Table size="small" aria-label="a dense table">
-                                                <TableHead>
-                                                    <TableRow>
-                                                        <TableCell>Name</TableCell>
-                                                        <TableCell align="right">Ward No.</TableCell>
-                                                        <TableCell align="right">Priority</TableCell>
-                                                        <TableCell align="right">Start Date</TableCell>
-                                                        <TableCell align="right">End Date</TableCell>
-                                                    </TableRow>
-                                                </TableHead>
-                                                <TableBody>
-                                                    {rowsPAt.map((row) => (
-                                                        <TableRow
-                                                            key={row.name}
-                                                            sx={PatTabBody}>
-                                                            <TableCell component="th" scope="row">{row.name}</TableCell>
-                                                            <TableCell align="right">{row.Ward}</TableCell>
-                                                            <TableCell align="right">{row.Priority}</TableCell>
-                                                            <TableCell align="right">{row.StartDate}</TableCell>
-                                                            <TableCell align="right">{row.EndDate}</TableCell>
-                                                        </TableRow>
-                                                    ))}
-                                                </TableBody>
-                                            </Table>
-                                        </TableContainer>
-                                    </Typography>
-                                </CardContent>
-                            </Card>
-                        </Grid>
-                        <Grid item xs={4}>
-                            <Card variant="outlined" data-aos="fade-left" data-aos-duration="3000">
-                                <CardContent>
-                                    <Typography variant="h5" component="div">
-                                        <LocalizationProvider dateAdapter={AdapterDayjs}>
-                                            <DateCalendar />
-                                        </LocalizationProvider>
-                                    </Typography>
-                                </CardContent>
-                            </Card>
-                        </Grid>
-                    </Grid>
-                </Box>
-                <br />
-                <br /> */}
-                {/* <Box sx={{ cardRow }} data-aos="fade-up" data-aos-duration="3000">
-                    <Grid>
-                        <Card variant="outlined">
-                            <CardContent >
-                                <Typography variant='h5' color="text.secondary" gutterBottom>Schedules</Typography>
-                                <Typography className='TypoPara' color="text.secondary">Take a look to your schedule for this month</Typography>
-                                <hr />
-                                <Typography variant="h5" component="div">
-                                    <TableContainer component={Paper}>
-                                        <Table size="small" aria-label="a dense table">
-                                            <TableHead>
-                                                <TableRow>
-                                                    <TableCell>Day/Timing</TableCell>
-                                                    <TableCell align="right">11:00 AM</TableCell>
-                                                    <TableCell align="right">11:15 AM</TableCell>
-                                                    <TableCell align="right">11:30 AM</TableCell>
-                                                    <TableCell align="right">11:45 AM</TableCell>
-                                                    <TableCell align="right">12:00 AM</TableCell>
-                                                    <TableCell align="right">12:15 PM</TableCell>
-                                                    <TableCell align="right">12:30 PM</TableCell>
-                                                </TableRow>
-                                            </TableHead>
-                                            <TableBody>
-                                                {rowsdata.map((row1) => (
-                                                    <TableRow
-                                                        key={row1.name}
-                                                        sx={SchedTabBody}>
-                                                        <TableCell component="th" scope="row">
-                                                            {row1.name}
-                                                        </TableCell>
-                                                        <TableCell align="right">{row1.Mon}</TableCell>
-                                                        <TableCell align="right">{row1.Tue}</TableCell>
-                                                        <TableCell align="right">{row1.Wed}</TableCell>
-                                                        <TableCell align="right">{row1.Thu}</TableCell>
-                                                        <TableCell align="right">{row1.Fri}</TableCell>
-                                                        <TableCell align="right">{row1.Sat}</TableCell>
-                                                        <TableCell align="right">{row1.Sun}</TableCell>
-                                                    </TableRow>
-                                                ))}
-                                            </TableBody>
-                                        </Table>
-                                    </TableContainer>
-                                </Typography>
-                            </CardContent>
-                        </Card>
-                    </Grid>
+                {/* <Box className="BoxDesign" display="flex" justifyContent="end">
+                    {hoverC ? (
+                        <>
+                            <div className="showCl" onClick={ThemeChangeC}> */}
+                {/* <span onClick={handleChangeV} data-value="#116A7A">
+                                    <CircleIcon sx={{ color: 'BLUE' }} />
+                                </span> */}
+                {/* <span onClick={handleChangeV} data-value="#116A7B">
+                                    <CircleIcon sx={{ color: 'BLUE' }} />
+                                </span>
+                                <span onClick={handleChangeV} data-value="#3D3B40">
+                                    <CircleIcon sx={{ color: 'black' }} />
+                                </span>
+                                <span onClick={handleChangeV} data-value="#FF90BC">
+                                    <CircleIcon sx={{ color: 'Pink' }} />
+                                </span>
+                                <span onClick={handleChangeV} data-value="#6DB9EF">
+                                    <CircleIcon sx={{ color: 'lightblue' }} />
+                                </span>
+                                <span data-value="#116A7A">
+                                    <Settings size="md" sx={{ color: 'darkblue' }} />
+                                </span>
+                            </div>
+                        </>
+                    ) : (
+                        <div className="showCl1" onClick={ThemeChange}>
+                            <button className="opbtn" data-value="#116A7A">
+                                <Settings sx={{ color: 'black' }} />
+                            </button>
+                        </div>
+                    )}
                 </Box> */}
+                <Outlet />
             </Box>
         </Box >
     );

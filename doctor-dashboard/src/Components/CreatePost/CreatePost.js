@@ -13,10 +13,9 @@ import { Grid } from '@mui/material';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
-import Avatar from '@mui/material/Avatar';
 import axios from 'axios';
 import { styled } from '@mui/material/styles';
-import { CrdSizzeArt } from '../../Prototypes/styles.js';
+import { CrdSizzeArt, ArtBoxMD } from '../../Prototypes/styles.js';
 import Dialog from '@mui/material/Dialog';
 import DialogTitle from '@mui/material/DialogTitle';
 import DialogContent from '@mui/material/DialogContent';
@@ -25,6 +24,9 @@ import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import { Link, useNavigate } from 'react-router-dom';
 import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
+import { useDispatch, useSelector, shallowEqual } from 'react-redux';
+import { getApiPosts, postApiPost, DeleteApiPost, patchApiPost } from '../../Redux/Action/CrtPostAct.js';
+import { getSingleApi } from '../../Redux/Action/CrtPostSingleAction.js'
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
     '& .MuiDialogContent-root': {
@@ -83,7 +85,23 @@ export default function CreatePost() {
     const [errors, setErrors] = useState({});
     const [resetImage, setResetImage] = useState(false);
     const navv = useNavigate();
+    const dispatch = useDispatch();
 
+    const GetAPIDataD = useSelector((state) => state.postReducer.Postlist);
+    const GetAPISingle = useSelector((state) => state.getsingleReducer.getSingle);
+
+
+    useEffect(() => {
+        if (GetAPIDataD !== null) {
+            setAccessData(GetAPIDataD);
+        }
+    }, [GetAPIDataD]);
+
+    useEffect(() => {
+        if (GetAPISingle !== null) {
+            setSelectedValues(GetAPISingle);
+        }
+    }, [GetAPISingle]);
 
     function getDateformat(api_date) {
         const dateString = api_date;
@@ -158,33 +176,33 @@ export default function CreatePost() {
         }
         if (isUpdate && selectedId) {
             if (validateForm()) {
-                axios.patch(`http://127.0.0.1:8000/api/doctor/article/${selectedId}`, formData, { headers: headers })
-                    .then((res) => {
-                        // console.log(res.data);
-                        setCrtArticle(res.data);
-                        SuccessAlert();
-                        ResetTreat();
-                        setValue(0);
-                        setIsUpdate(false);
-                        setSelectedId(null);
-                    })
-                    .catch((error) => {
-                        console.error('Error updating treatment:', error);
-                        InvaliAlert('Error updating treatment');
-                    });
+                // axios.patch(`http://127.0.0.1:8000/api/doctor/article/${selectedId}`, formData, { headers: headers })
+                //     .then((res) => {
+                // setCrtArticle(res.data);
+                dispatch(patchApiPost(headers, formData, selectedId));
+                SuccessAlert();
+                ResetTreat();
+                setValue(0);
+                setIsUpdate(false);
+                setSelectedId(null);
+                // })
+                // .catch((error) => {
+                //     console.error('Error updating treatment:', error);
+                //     InvaliAlert('Error updating treatment');
+                // });
             }
         } else {
             if (validateForm()) {
-                axios.post(`http://127.0.0.1:8000/api/doctor/article`, formData, { headers: headers }).then((res) => {
-                    // console.log(res.data);
-                    setCrtArticle(res.data);
-                    SuccessAlert();
-                    ResetTreat();
-                    setValue(0);
-                })
-                    .catch((error) => {
-                        console.log("Error", InvaliAlert(error));
-                    })
+                // axios.post(`http://127.0.0.1:8000/api/doctor/article`, formData, { headers: headers }).then((res) => {
+                dispatch(postApiPost(headers, formData))
+                // setCrtArticle(res.data);
+                SuccessAlert();
+                ResetTreat();
+                setValue(0);
+                // })
+                //     .catch((error) => {
+                //         console.log("Error", InvaliAlert(error));
+                //     })
             }
             else {
                 InvaliAlert();
@@ -197,14 +215,11 @@ export default function CreatePost() {
             'Content-Type': 'multipart/form-data',
             "Authorization": `Bearer ${token}`,
         };
-        axios.get(`http://127.0.0.1:8000/api/doctor/article`, { headers: headers }).then((res) => {
-            setAccessData(res.data);
-            setDate(res.data.created_at);
-        })
+        dispatch(getApiPosts(headers));
     }
     useEffect(() => {
         getData();
-    }, [CrtArticle])
+    }, []);
 
     useEffect(() => {
         if (selectedValues[0]) {
@@ -216,21 +231,19 @@ export default function CreatePost() {
             'Content-Type': 'multipart/form-data',
             "Authorization": `Bearer ${token}`,
         };
-        axios.get(`http://127.0.0.1:8000/api/doctor/article/${id}`, { headers: headers }).then((res) => {
-            console.log(res.data);
-            setSelectedValues(res.data);
-            setOpen(true);
-        });
+        // axios.get(`http://127.0.0.1:8000/api/doctor/article/${id}`, { headers: headers }).then((res) => {
+        //     setSelectedValues(res.data);
+        dispatch(getSingleApi(id, headers))
+        setOpen(true);
+        // });
     }
 
     const UpdateData = (idd) => {
-        debugger
         const headers = {
             'Content-Type': 'multipart/form-data',
             "Authorization": `Bearer ${token}`,
         };
         axios.get(`http://127.0.0.1:8000/api/doctor/article/${idd}`, { headers: headers }).then((res) => {
-            console.log(res.data);
             const { title, image, description } = res.data[0];
             setCrtArticle({ title, image, description });
             setImage(`${res.data[0].image}`);
@@ -254,28 +267,33 @@ export default function CreatePost() {
             confirmButtonText: 'Yes, delete it!'
         }).then((result) => {
             if (result.isConfirmed) {
-                axios.delete(`http://127.0.0.1:8000/api/doctor/article/${idd}`, { headers: { Authorization: `Bearer ${token}` } }).then((res) => {
-                    Swal.fire({
-                        title: 'deleted',
-                        text: "data deleted",
-                        icon: 'success',
-                        timer: 3000,
-                        showConfirmButton: false,
-                    })
-                    if ((currentPage > 1) && ((currentPage >= 2) && (currentPage <= getpageno)) && (currentPage !== 1)) {
-                        prevClick();
-                        getData();
-                    } else if (currentPage === 1) {
-                        // handleClick();
-                        getData();
-                    }
-                    else {
-                        getData();
-                    }
-                })
-                    .catch((error) => {
-                        console.error("Error deleting treatment:", InvaliAlert(error));
-                    });
+                const headers = {
+                    'Content-Type': 'multipart/form-data',
+                    "Authorization": `Bearer ${token}`,
+                };
+                dispatch(DeleteApiPost(headers, idd))
+                // axios.delete(`http://127.0.0.1:8000/api/doctor/article/${idd}`, { headers: { Authorization: `Bearer ${token}` } }).then((res) => {
+                //     Swal.fire({
+                //         title: 'deleted',
+                //         text: "data deleted",
+                //         icon: 'success',
+                //         timer: 3000,
+                //         showConfirmButton: false,
+                //     })
+                if ((currentPage > 1) && ((currentPage >= 2) && (currentPage <= getpageno)) && (currentPage !== 1)) {
+                    prevClick();
+                    getData();
+                } else if (currentPage === 1) {
+                    // handleClick();
+                    getData();
+                }
+                else {
+                    getData();
+                }
+                // })
+                // .catch((error) => {
+                //     console.error("Error deleting treatment:", InvaliAlert(error));
+                // });
             }
         })
     }
@@ -345,9 +363,9 @@ export default function CreatePost() {
                 <br />
                 <br />
                 {AccessData && chunkArray(AccessData.slice((currentPage - 1) * itemPerPage, currentPage * itemPerPage), 3).map((row, rowIndex) => (
-                    <Box className="row" key={rowIndex}>
+                    <Box className="row" key={rowIndex} xs={12} sm={12} md={4} lg={4} display="flex" justifyContent="space-between" sx={ArtBoxMD}>
                         {row.map((item, index) => (
-                            <Card sx={CrdSizzeArt}
+                            <Card sx={CrdSizzeArt} xs={12} sm={12} md={4} lg={4}
                                 // sx={{CrdSizze, width: '350px', mr: 5.5, mb: 5.5 }}
                                 className='CrdPadding1' key={item.id}>
                                 <Typography component="div" className='articleiconDiv'>
@@ -406,8 +424,7 @@ export default function CreatePost() {
                                                         </DialogActions>
                                                     </BootstrapDialog>
                                                 )
-                                            })
-                                                : ''}
+                                            }) : ''}
                                         </Grid>
                                         <Grid item xs={6}>
                                             <Typography paragraph color='#0276aa' display="flex" justifyContent="end"><CalendarMonthIcon />{getDateformat(item.created_at)}</Typography>
@@ -420,20 +437,17 @@ export default function CreatePost() {
                 ))
                 }
                 <br />
-                {
-                    getpageno > 1
-                        ? <div className='pagination justify-content-center border-primary'>
-                            <button className='btn btn-primary' onClick={() => prevClick(currentPage - 1)} style={{ marginLeft: '2px' }} disabled={currentPage === 1 ? true : false}>  prev</button>
-                            {PageNumber.map((num, index) => {
-                                return (
-                                    <button className="btn btn-primary" key={index} onClick={() => handleClick(num)} style={{ marginLeft: '2px' }} > {num} </button>
-                                )
-                            }
-                            )}
-                            <button className='btn btn-primary' onClick={() => NextClick(currentPage + 1)} style={{ marginLeft: '2px' }} disabled={currentPage === getpageno ? true : false}>Next</button>
-                        </div>
-                        : null
-                }
+                {getpageno > 1
+                    ? <div className='pagination justify-content-center border-primary'>
+                        <button className='btn btn-primary' onClick={() => prevClick(currentPage - 1)} style={{ marginLeft: '2px' }} disabled={currentPage === 1 ? true : false}>  prev</button>
+                        {PageNumber.map((num, index) => {
+                            return (
+                                <button className="btn btn-primary" key={index} onClick={() => handleClick(num)} style={{ marginLeft: '2px' }} > {num} </button>
+                            )
+                        }
+                        )}
+                        <button className='btn btn-primary' onClick={() => NextClick(currentPage + 1)} style={{ marginLeft: '2px' }} disabled={currentPage === getpageno ? true : false}>Next</button>
+                    </div> : null}
                 <br />
                 <br />
             </CustomTabPanel>
@@ -445,8 +459,7 @@ export default function CreatePost() {
                     sx={{ '& > :not(style)': { m: 1, width: '100ch' }, }
                     }
                     noValidate
-                    autoComplete="off"
-                >
+                    autoComplete="off">
                     <br />
                     <FormControl fullWidth className='FControl'
                         // { m: 1 }
@@ -458,7 +471,7 @@ export default function CreatePost() {
                         <p>Current Image: <Link to={`http://127.0.0.1:8000/${image}`} target='_blank' rel="noopener noreferrer">{`${image}`}</Link></p>
                         <TextField id="outlined-basic" name='image' onChange={(e) => imageUploadHandler(e)} accept="image/png, image/jpeg" variant="outlined" type='file' />
                         <br />
-                        <br/>
+                        <br />
                         <TextField id="outlined-basic" name='description' value={CrtArticle.description} onChange={(e) => { setCrtArticle({ ...CrtArticle, description: e.target.value }) }} label="Descriptions" variant="outlined" />
                         {errors.description && <p style={{ color: 'red' }}>{errors.description}</p>}
                         <br />

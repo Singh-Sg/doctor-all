@@ -64,7 +64,7 @@ export let AppBarStyle = {
     width: { sm: `calc(100% - ${drawerWidth}px)` },
     ml: { sm: `${drawerWidth}px` },
     backgroundColor: '#98A8F8',
-    border: 'none '
+    border: 'none'
 }
 export let drnamegrd = {
     mr: 2, display: { sm: 'none' },
@@ -107,17 +107,18 @@ export let drToggleOpen = {
     '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth },
 }
 export let MainSection = {
-    flexGrow: 1, p: 3, width: { sm: `calc(100% - ${drawerWidth}px)` }
+    flexGrow: 1, p: 3, width: { sm: `calc(100% - ${drawerWidth}px)` },
+    borderRadius: '50%'
 }
 export let inputSizze = {
     width: { sm: '40ch', md: '50ch', lg: '130ch' },
     margin: 1,
 }
 export let CrdSizze = {
-    width: { sm: '550px', md: '550px', lg: '550px' },
+    width: { sm: '550px', md: '550px', lg: '550px'},
     mr: 5.5,
     mb: 5.5,
-    boxShadow:2
+    boxShadow: 2,
 }
 export let FourthBox = {
     width: { sm: '45%', md: '45%', lg: '10%' }
@@ -139,15 +140,29 @@ export const style = {
 
 export let CrdSizzeArt = {
     width: { sm: '355px', md: '355px', lg: '355px' },
+    // width: { sm: '255px', md: '255px', lg: '255px' },
     mr: 5.5,
     mb: 5.5,
     // boxShadow:1,
     // borderRadius:'12px',
-    borderTopLeftRadius:'12px',
-    borderTopRightRadius:'12px',
-    borderBottomLeftRadius:'0px',
-    borderBottomRightRadius:'0px'
+    borderTopLeftRadius: '12px',
+    borderTopRightRadius: '12px',
+    borderBottomLeftRadius: '0px',
+    borderBottomRightRadius: '0px',
+}
+
+export let ArtBoxMD={
+    display:'flex',
+    justifyContent:{xs:'center',sm:'center',md:'center',lg:'space-evenly'}
 }
 export let FourthBoxArt = {
     width: { sm: '45%', md: '45%', lg: '10%' }
 }
+export let RotateBord = {
+    border: 'none',
+    transform: 'rotate(90deg)'
+}
+
+// export let MainLD = {
+// height: { sm: '100%', md: '100%', lg: '100%' }
+// }

@@ -25,8 +25,24 @@ export default function UpdateProfile() {
     // const [user, setUser] = useState({});
     const token = localStorage.getItem('token');
     const navigate = useNavigate();
-    const [hover, setHover] = useState(false);
+    const [hoverC, setHoverC] = useState(false);
     const [theme, setTheme] = useState('');
+
+    // const handleChangeV = (e) => {
+    //     setTheme(e.target.value)
+    //     debugger
+    // }
+    const handleChangeV = (e) => {
+        setTheme(e.currentTarget.getAttribute('data-value'));
+        debugger;
+    };
+    useEffect(() => {
+        const dashes = document.getElementsByClassName("MLDa");
+        for (let i = 0; i < dashes.length; i++) {
+            dashes[i].style.backgroundColor = theme;
+            debugger
+        }
+    }, [theme]);
 
     const [userData, setUserData] = useState({
         bio: "",
@@ -47,6 +63,29 @@ export default function UpdateProfile() {
         },
         specialty_: []
     });
+
+    // const ThemeChange = () => {
+    //     setTheme(true);
+    //     const setcl = document.querySelectorAll('.showCl')[0];
+    //     setcl.style.transition= 'width 0.3s ease-in-out';
+    // }
+    const ThemeChange = (e) => {
+        setHoverC(true);
+        const setcl = document.querySelectorAll('.showCl');
+        setcl.forEach((element) => {
+            element.style.transition = 'width 3s ease-in-out';
+        });
+    };
+
+    const ThemeChangeC = (e) => {
+        setHoverC(false);
+        const setcl1 = document.querySelectorAll('.showCl1');
+        setcl1.forEach((element) => {
+            element.style.display = 'none';
+        });
+    };
+
+    // };
 
     const validateForm = () => {
         var nm = /^[A-Za-z]+$/;
@@ -183,7 +222,7 @@ export default function UpdateProfile() {
                 axios
                     .patch(`http://127.0.0.1:8000/api/doctor`, formData, { headers: headers })
                     .then((res) => {
-                        console.log(res.data);
+                        // console.log(res.data);
                         setUserData(res.data);
                         successAlert();
                         navigate('/sidemenu/docprofile')
@@ -199,7 +238,7 @@ export default function UpdateProfile() {
     }
     const GetData = () => {
         axios.get(`http://127.0.0.1:8000/api/super-specialty/`).then((res) => {
-            console.log(res.data);
+            // console.log(res.data);
             setGetData(res.data);
         })
     }
@@ -216,8 +255,8 @@ export default function UpdateProfile() {
             axios.get(`http://127.0.0.1:8000/api/doctor`, { headers: headers }).then((res) => {
                 // const { username, email, first_name, last_name, bio, address, education, experience, in_clinic_consulting_fee, video_consulting_fee, audio_consulting_fee, phone_number, gender, profile_image } = res.data;
                 // setUserData({ username, email, first_name, last_name, bio, address, education, experience, in_clinic_consulting_fee, video_consulting_fee, audio_consulting_fee, phone_number, gender, profile_image });
-                console.log(res.data)
-                debugger
+                // console.log(res.data)
+                // debugger
                 setUserData(res.data);
                 // debugger
                 // setIcon(thumbnail)
@@ -234,13 +273,13 @@ export default function UpdateProfile() {
         setSelectedValues(e.target.value);
     };
     return (
-        <div>
+        <div className="MLDa">
             {/* <Container maxWidth="lg" className="boxContainer">
                 <Box> */}
             <br />
-            <Box display="flex" justifyContent="end">
-                <Avatar sx={{ backgroundColor: 'red' }} />
-                <Box sx={{ minWidth: 50, border: 'none', transform: 'rotate(90deg)' }}>
+            {/* <Box display="flex" justifyContent="end"> */}
+            {/* <Avatar sx={{ backgroundColor: 'red' }} /> */}
+            {/* <Box sx={{ minWidth: 50, border: 'none', transform: 'rotate(90deg)' }}>
                     <FormControl fullWidth>
                         <Select
                             labelId="demo-simple-select-label"
@@ -252,16 +291,81 @@ export default function UpdateProfile() {
                             value={theme}
                             label="Theme"
                             onChange={handleChange}
+                            renderValue={(selected) => (
+                                <div>
+                                    {selected.map((value) => (
+                                        <span key={value} style={{ marginRight: '8px' }}>
+                                            <CircleIcon sx={{ color: value }} />
+                                        </span>
+                                    ))}
+                                </div>
+                            )}
                         >
-                            <MenuItem value={'#116A7A'}><CircleIcon sx={{ color: 'lightblue' }} /></MenuItem>
-                            <MenuItem value={'#116A7B'}><CircleIcon sx={{ color: 'blue' }} /></MenuItem>
-                            <MenuItem value={'#3D3B40'}><CircleIcon sx={{ color: 'black' }} /></MenuItem>
-                            <MenuItem value={'#FF90BC'}><CircleIcon sx={{ color: 'pink' }} /></MenuItem>
-                            <MenuItem value={'#6DB9EF'}><CircleIcon sx={{ color: 'lightblue' }} /></MenuItem>
+                            <div display="inline-flex" justifyContent="center">
+                                <MenuItem value={'#116A7A'}><CircleIcon sx={{ color: 'lightblue' }} /></MenuItem>
+                                <MenuItem value={'#116A7B'}><CircleIcon sx={{ color: 'blue' }} /></MenuItem>
+                                <MenuItem value={'#3D3B40'}><CircleIcon sx={{ color: 'black' }} /></MenuItem>
+                                <MenuItem value={'#FF90BC'}><CircleIcon sx={{ color: 'pink' }} /></MenuItem>
+                                <MenuItem value={'#6DB9EF'}><CircleIcon sx={{ color: 'lightblue' }} /></MenuItem>
+                            </div>
                         </Select>
                     </FormControl>
                 </Box>
+            </Box> */}
+            {/*  */}
+            {/* <Box display="flex" justifyContent="end">
+                {hoverC ?
+                    <>
+                        <div className="showCl" onClick={ThemeChangeC}>
+                            <span onClick={handleChangeV} value={'#116A7A'}><CircleIcon sx={{ color: 'lightblue' }} /></span>
+                            <span onClick={handleChangeV} value={'#116A7B'}><CircleIcon sx={{ color: 'darkblue' }} /></span>
+                            <span onClick={handleChangeV} value={'#3D3B40'}><CircleIcon sx={{ color: 'green' }} /></span>
+                            <span onClick={handleChangeV} value={'#FF90BC'}><CircleIcon sx={{ color: 'lightgreen' }} /></span>
+                            <span onClick={handleChangeV} value={'#6DB9EF'}><CircleIcon sx={{ color: 'black' }} /></span>
+                            <button><CircleIcon sx={{ color: 'darkblue' }} /></button>
+                        </div>
+                    </>
+                    :
+                    <div className="showCl1" onMouseEnter={ThemeChange}>
+                        <button className="opbtn"><CircleIcon sx={{ color: 'lightblue' }} /></button>
+                    </div>
+                }
+            </Box> */}
+            {/*  */}
+            <Box display="flex" justifyContent="end">
+                {hoverC ? (
+                    <>
+                        <div className="showCl" onClick={ThemeChangeC}>
+                            <span onClick={handleChangeV} data-value="#116A7A">
+                                <CircleIcon sx={{ color: 'lightblue' }} />
+                            </span>
+                            <span onClick={handleChangeV} data-value="#116A7B">
+                                <CircleIcon sx={{ color: 'darkblue' }} />
+                            </span>
+                            <span onClick={handleChangeV} data-value="#3D3B40">
+                                <CircleIcon sx={{ color: 'green' }} />
+                            </span>
+                            <span onClick={handleChangeV} data-value="#FF90BC">
+                                <CircleIcon sx={{ color: 'lightgreen' }} />
+                            </span>
+                            <span onClick={handleChangeV} data-value="#6DB9EF">
+                                <CircleIcon sx={{ color: 'black' }} />
+                            </span>
+                            <button onClick={handleChangeV} data-value="#116A7A">
+                                <CircleIcon sx={{ color: 'darkblue' }} />
+                            </button>
+                        </div>
+                    </>
+                ) : (
+                    <div className="showCl1" onMouseEnter={ThemeChange}>
+                        <button className="opbtn" onClick={handleChangeV} data-value="#116A7A">
+                            <CircleIcon sx={{ color: 'lightblue' }} />
+                        </button>
+                    </div>
+                )}
             </Box>
+
+            {/*  */}
             <br />
 
             <Container maxWidth="lg" className="formSignin">

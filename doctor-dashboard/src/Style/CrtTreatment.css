@@ -5,7 +5,10 @@
 .treaticon{
     width: 150px !important;
     height: 150px !important;
-
+}
+.treaticon1{
+    width: 150px !important;
+    height: 150px !important;
 }
 .treatimage{
     width: 100% !important;
@@ -22,6 +25,12 @@
     height: auto !important;
 }
 .CrdPadding{
+    padding: 20px 20px !important;
+    border-radius: 12px;
+    /* display: flex; */
+    /* justify-content: space-around; */
+}
+.CrdPadding1{
     padding: 20px 20px !important;
     border-radius: 12px;
     /* display: flex; */

@@ -15,12 +15,20 @@ import Select from '@mui/material/Select';
 import { Link } from 'react-router-dom'
 import "../../../Style/Signup.css";
 import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+// import { SignupDataApi } from '../../../Redux/Action/SignupApiAction,js'
+import { SignupDataApi } from "../../../Redux/Action/SignupApiAction.js";
+import { Single_Get } from "../../../Redux/Action/SpecialtyAction.js";
 
 export default function Signup() {
     const [errors, setErrors] = useState({});
     const [getData, setGetData] = useState(null);
     const [selectedValues, setSelectedValues] = useState([]);
     const navigate = useNavigate();
+    const dispatch = useDispatch();
+
+    const SIGNUPAPI = useSelector((state) => state.signupReducer.signupList);
+    const SPECIALTY = useSelector((state) => state.SpecialityReducer.Special);
 
     const [userData, setUserData] = useState({
         email: "",
@@ -42,6 +50,20 @@ export default function Signup() {
         specialty: ""
     });
 
+    useEffect(() => {
+        // console.log("SIGNUPAPI", SIGNUPAPI);
+        if (SIGNUPAPI !== null) {
+            setUserData(SIGNUPAPI);
+        }
+    }, [SIGNUPAPI])
+
+    useEffect(() => {
+        // console.log("SPECIALTY", SPECIALTY);
+        if (SPECIALTY !== null) {
+            setGetData(SPECIALTY);
+        }
+    }, [SPECIALTY])
+
     const validateForm = () => {
         var nm = /^[A-Za-z]+$/;
 
@@ -62,7 +84,6 @@ export default function Signup() {
         } else if (userData.first_name.length < 3) {
             newErrors.full_name = 'Name must be at least 3 characters long';
         }
-
         if (!userData.last_name || userData.last_name.trim() === '') {
             newErrors.full_name = 'Name is required';
         } else if (!/^[a-zA-Z\s]+$/.test(userData.last_name)) {
@@ -173,17 +194,17 @@ export default function Signup() {
         });
 
         if (validateForm()) {
-            axios
-                .post(`http://127.0.0.1:8000/api/user/register/`, formData)
-                .then((res) => {
-                    setUserData(res.data);
-                    successAlert();
-                    navigate('/signin')
-
-                })
-                .catch((error) => {
-                    console.log("API Error", InvaliAlert(error));
-                });
+            // axios
+            //     .post(`http://127.0.0.1:8000/api/user/register/`, formData)
+            //     .then((res) => {
+            //         setUserData(res.data);
+            dispatch(SignupDataApi(formData))
+            successAlert();
+            navigate('/')
+            // })
+            //     .catch((error) => {
+            //         console.log("API Error", InvaliAlert(error));
+            //     });
         }
         else {
             InvaliAlert();
@@ -213,9 +234,10 @@ export default function Signup() {
         setSelectedValues([]);
     }
     const GetData = () => {
-        axios.get(`http://127.0.0.1:8000/api/super-specialty/`).then((res) => {
-            setGetData(res.data);
-        })
+        // axios.get(`http://127.0.0.1:8000/api/super-specialty/`).then((res) => {
+            // setGetData(res.data);
+        // })
+        dispatch(Single_Get());
     }
     useEffect(() => {
         GetData();
@@ -469,7 +491,7 @@ export default function Signup() {
                                     <TextField
                                         id="outlined-basic"
                                         name="phone_number"
-                                        type="number"
+                                        type="text"
                                         value={userData.phone_number}
                                         onChange={(e) => {
                                             setUserData({

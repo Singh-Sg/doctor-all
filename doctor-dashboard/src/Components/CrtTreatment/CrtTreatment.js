@@ -9,7 +9,7 @@ import TextField from '@mui/material/TextField';
 import FormControl from '@mui/material/FormControl';
 import Button from '@mui/material/Button';
 import '../../Style/CrtTreatment.css';
-import { Avatar, Divider, Grid } from '@mui/material';
+import { Grid } from '@mui/material';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
@@ -22,9 +22,14 @@ import DialogActions from '@mui/material/DialogActions';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
 import { Link } from 'react-router-dom';
-import Container from '@mui/material/Container';
 import { inputSizze, CrdSizze, FourthBox } from '../../Prototypes/styles.js';
 import NavigateNextIcon from '@mui/icons-material/NavigateNext';
+import { useDispatch, useSelector } from 'react-redux';
+import { Get_Api, Post_Api, Update_Api } from '../../Redux/Action/TreatmentAct.js';
+import { Single_Get } from '../../Redux/Action/SingleTreatAPIAction.js';
+// import { Get_Api, Post_Api, Update_Api } from '../../Redux/Action.js';
+// import { updateTreatmentData, fetchTreatmentData } from '../../Redux/Action/UpdateTreat.js';
+import { fetchTreatmentData, treatmentReducer } from '../../Redux/Action/UpdateTreat.js'
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
     '& .MuiDialogContent-root': {
@@ -81,17 +86,53 @@ export default function CrtTreatment() {
     const [isUpdate, setIsUpdate] = useState(false);
     const [image, setImage] = useState('');
     const [icon, setIcon] = useState('');
+    const dispatch = useDispatch();
+
+    const GetAPIData = useSelector((state) => state.yourReducer.list)
+    const Get_SAPI = useSelector((state) => state.singleReducer.singlelist)
+    const UpdateAPI = useSelector((state) => state.treatmentReducer.crtTreat)
+    // const Updateicon = useSelector((state) => state.treatmentReducer.icon)
+    // const Updateimage = useSelector((state) => state.treatmentReducer.image)
+
+    // useEffect(() => {
+    //     console.log('UpdateAPI:', UpdateAPI);
+    //     if (Array.isArray(UpdateAPI)) {
+    //         setStoreVal(UpdateAPI);
+    //         console.log(StoreVal)
+    //     }
+    // }, [UpdateAPI]);
+
+    useEffect(() => {
+        if (Array.isArray(Get_SAPI)) {
+            setSelectedTreatment(Get_SAPI);
+        }
+    }, [Get_SAPI]);
+
+    useEffect(() => {
+        if (Array.isArray(UpdateAPI)) {
+            setSelectedTreatment(UpdateAPI);
+        }
+    }, [UpdateAPI]);
+
+
+    useEffect(() => {
+        console.log('GetAPIData:', GetAPIData);
+        if (Array.isArray(GetAPIData)) {
+            setStoreVal(GetAPIData);
+            console.log(StoreVal)
+        }
+    }, [GetAPIData]);
 
     const handleClickOpen = (id) => {
         const headers = {
             'Content-Type': 'multipart/form-data',
             "Authorization": `Bearer ${token}`,
         };
-        axios.get(`http://127.0.0.1:8000/api/doctor/treatments/${id}`, { headers: headers }).then((res) => {
-            console.log(res.data);
-            setSelectedTreatment(res.data);
-            setOpen(true);
-        })
+        // axios.get(`http://127.0.0.1:8000/api/doctor/treatments/${id}`, { headers: headers }).then((res) => {
+        dispatch(Single_Get(id, headers))
+        // setSelectedTreatment(res.data);
+        setOpen(true);
+        // })
     };
 
     useEffect(() => {
@@ -101,14 +142,16 @@ export default function CrtTreatment() {
     // const handleClickOpen = (id) => {
     //     setOpen(true);
     // }
+
     const UpdateData = (idd) => {
         const headers = {
             'Content-Type': 'multipart/form-data',
             "Authorization": `Bearer ${token}`,
         };
         axios.get(`http://127.0.0.1:8000/api/doctor/treatments/${idd}`, { headers: headers }).then((res) => {
-            console.log(res.data);
-            // setCrtTreat(res.data)
+            setCrtTreat(res.data)
+            // update_single(headers, idd)
+            // dispatch(fetchTreatmentData(idd, headers));
             const { title, icon, image, description } = res.data[0];
             setCrtTreat({ title, icon, image, description });
             setIcon(`http://127.0.0.1:8000/${res.data[0].icon}`);
@@ -197,34 +240,35 @@ export default function CrtTreatment() {
 
         if (isUpdate && selectedId) {
             if (validateForm()) {
-                axios.patch(`http://127.0.0.1:8000/api/doctor/treatments/${selectedId}`, formData, { headers: headers })
-                    .then((res) => {
-                        console.log(res.data);
-                        setCrtTreat(res.data);
-                        SuccessAlert();
-                        ResetTreat();
-                        setValue(0);
-                        setIsUpdate(false);
-                        setSelectedId(null);
-                    })
-                    .catch((error) => {
-                        console.error('Error updating treatment:', error);
-                        InvaliAlert('Error updating treatment');
-                    });
+                // axios.patch(`http://127.0.0.1:8000/api/doctor/treatments/${selectedId}`, formData, { headers: headers })
+                //     .then((res) => {
+                dispatch(Update_Api(formData, headers, selectedId))
+                // setCrtTreat(res.data);
+                SuccessAlert();
+                ResetTreat();
+                setValue(0);
+                setIsUpdate(false);
+                setSelectedId(null);
+                // }
+                // )
+                // .catch((error) => {
+                //     console.error('Error updating treatment:', error);
+                //     InvaliAlert('Error updating treatment');
+                // });
             }
         } else {
             if (validateForm()) {
-                axios.post(`http://127.0.0.1:8000/api/doctor/treatments`, formData, { headers: headers }).then((res) => {
-                    console.log(res.data);
-                    setCrtTreat(res.data);
-                    SuccessAlert();
-                    ResetTreat();
-                    setValue(0);
-                    // getData();
-                })
-                    .catch((error) => {
-                        console.log("Error", InvaliAlert(error));
-                    })
+                // axios.post(`http://127.0.0.1:8000/api/doctor/treatments`, formData, { headers: headers }).then((res) => {
+                dispatch(Post_Api(formData, headers));
+                // setCrtTreat(res.data);
+                SuccessAlert();
+                ResetTreat();
+                setValue(0);
+                // // getData();
+                // })
+                //     .catch((error) => {
+                //         console.log("Error", InvaliAlert(error));
+                //     })
             }
             else {
                 InvaliAlert();
@@ -237,10 +281,10 @@ export default function CrtTreatment() {
             'Content-Type': 'multipart/form-data',
             "Authorization": `Bearer ${token}`,
         };
-        axios.get(`http://127.0.0.1:8000/api/doctor/treatments`, { headers: headers }).then((res) => {
-            console.log(res.data);
-            setStoreVal(res.data);
-        })
+        // axios.get(`http://127.0.0.1:8000/api/doctor/treatments`, { headers: headers }).then((res) => {
+        dispatch(Get_Api(headers));
+        // setStoreVal(res.data);
+        // })
     }
 
     useEffect(() => {
@@ -306,20 +350,20 @@ export default function CrtTreatment() {
                 <br />
                 <br />
                 {StoreVal && chunkArray(StoreVal.slice((currentPage - 1) * itemPerPage, currentPage * itemPerPage), 2).map((row, rowIndex) => (
-                    <Box className="row" key={rowIndex}>
+                    <Box className="row" key={rowIndex} xs={12} sm={12} md={6} lg={6}>
                         {row.map((item, index) => (
-                            <Card sx={CrdSizze} className='CrdPadding' key={item.id}>
+                            <Card sx={CrdSizze} xs={12} sm={12} md={6} lg={6} className='CrdPadding' key={item.id}>
                                 <div>
                                     <CardContent>
                                         <Grid container spacing={2}>
-                                            <Grid item xs={4}>
+                                            <Grid item xs={12} sm={12} md={4} lg={4}>
                                                 <Typography component="div" className='treaticonDiv'>
                                                     <img src={`http://127.0.0.1:8000/${item.icon}`} alt='img' className='treaticon' />
                                                 </Typography>
                                             </Grid>
-                                            <Grid item xs={8}>
+                                            <Grid item xs={12} sm={12} md={8} lg={8}>
                                                 <Typography variant='h6' component="div" color="text.primary" gutterBottom><b>{item.title}</b></Typography>
-                                                <Typography paragraph color="text.primary" gutterBottom>{item.description.split(' ').join(' ').slice(0, 75) + '...'}</Typography>
+                                                <Typography paragraph color="text.primary" gutterBottom>{item.description.split(' ').join(' ').slice(0, 50) + '...'}</Typography>
                                                 <CardActions display="flex" justifyContent="end">
                                                     <Button key={item.id} onClick={() => handleClickOpen(item.id)} >See More <NavigateNextIcon /></Button>
                                                     {selectedTreatment ? selectedTreatment.map((item, index) => {

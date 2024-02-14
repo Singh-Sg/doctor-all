@@ -27,7 +27,10 @@ import PersonalVideoIcon from '@mui/icons-material/PersonalVideo';
 import SpatialAudioOffIcon from '@mui/icons-material/SpatialAudioOff';
 import AutoStoriesIcon from '@mui/icons-material/AutoStories';
 import VaccinesIcon from '@mui/icons-material/Vaccines';
-import {style} from '../../Prototypes/styles.js';
+import { style } from '../../Prototypes/styles.js';
+import { useDispatch, useSelector } from 'react-redux';
+import { getDocApi } from '../../Redux/Action/DocProfileAction.js';
+import { Single_Get } from '../../Redux/Action/SpecialtyAction.js';
 
 // const style = {
 //     position: 'absolute',
@@ -58,6 +61,7 @@ export default function DocProfile() {
     const [updateForm, setUpdateForm] = useState('');
     const [updateFormtype, setUpdateFormtype] = useState('');
     const [file, setFile] = useState(null);
+    const dispatch = useDispatch();
 
     const [userData, setUserData] = useState({
         bio: "",
@@ -81,6 +85,25 @@ export default function DocProfile() {
 
     // console.log(userData.specialty);
     // const [specialty, setSpecialty] = useState('');
+
+    const PROFILEDATA = useSelector((state) => state.docprofReducer.docProfile);
+    const SPECIFICDATA = useSelector((state) => state.SpecialityReducer.Special);
+
+    useEffect(() => {
+        console.log('PROFILEDATA', PROFILEDATA)
+        if (PROFILEDATA !== null) {
+            setDocProfile(PROFILEDATA);
+            setUserData(PROFILEDATA);
+        }
+    }, [PROFILEDATA])
+
+    useEffect(() => {
+        console.log('SPECIFICDATA', SPECIFICDATA)
+        if (SPECIFICDATA !== null) {
+            setGetData(SPECIFICDATA);
+        }
+    }, [SPECIFICDATA])
+
 
     // first...
     const formFields = [
@@ -140,26 +163,22 @@ export default function DocProfile() {
                                 className="IFWidth"
                                 // onChange={handleChange}
                                 // onChange={(e) => handleFieldChange(field.name, e.target.value)}
-                                onChange={handleChange}
-                            >
-                                {
-                                    getData
-                                        ?
-                                        getData.map((item) => {
-                                            return (
-                                                <MenuItem key={item.id} value={item.id}>{item.title}</MenuItem>
+                                onChange={handleChange}>
+                                {getData ?
+                                    getData.map((item) => {
+                                        return (
+                                            <MenuItem key={item.id} value={item.id}>{item.title}</MenuItem>
 
-                                            )
-                                        })
-                                        : null
-                                }
+                                        )
+                                    }) : null}
                             </Select>
                         </FormControl>
                     </>
                 ) : (
                     field.name === 'profile_image' ? (
                         <>
-                            {/* <Avatar alt='Doctor' src={`http://127.0.0.1:8000/${DocProfile.profile_image}`} sx={{ width: '100px', height: '100px' }} /> */}
+                            <Avatar alt='Doctor' src={userData.profile_image ? URL.createObjectURL(new Blob([userData.profile_image])) : `http://127.0.0.1:8000/${DocProfile.profile_image}`} sx={{ width: '100px', height: '100px' }} />
+                            <br />
                             <TextField
                                 id="outlined-basic"
                                 name={field.name}
@@ -167,8 +186,7 @@ export default function DocProfile() {
                                 accept="image/png, image/jpeg"
                                 onChange={(e) => { setUserData({ ...userData, profile_image: e.target.files[0] }) }}
                                 variant="outlined"
-                                className="IFWidth"
-                            />
+                                className="IFWidth" />
                         </>
                     ) : (
                         <TextField
@@ -178,11 +196,8 @@ export default function DocProfile() {
                             onChange={(e) => handleFieldChange(field.name, e.target.value)}
                             label={field.label}
                             variant="outlined"
-                            className="IFWidth"
-                        />
-                    )
-                )
-                }
+                            className="IFWidth" />
+                    ))}
                 <br />
                 <br />
             </div>
@@ -218,11 +233,9 @@ export default function DocProfile() {
             } else {
                 newUserData[fieldName] = value;
             }
-
             return newUserData;
         });
     };
-
 
     const getFieldValue = (fieldName) => {
         // Handle nested fields like "user_.first_name"
@@ -290,25 +303,27 @@ export default function DocProfile() {
         const headers = {
             'Authorization': `Bearer ${token}`,
         };
-        axios.get(`http://127.0.0.1:8000/api/doctor`, { headers: headers })
-            .then((res) => {
-                // console.log(res.data);
-                setDocProfile(res.data);
-                setUserData(res.data);
-            })
-            .catch((error) => {
-                console.log('error', error);
-            })
+        // axios.get(`http://127.0.0.1:8000/api/doctor`, { headers: headers })
+        //     .then((res) => {
+        //         // console.log(res.data);
+        //         setDocProfile(res.data);
+        //         setUserData(res.data);
+        //     })
+        //     .catch((error) => {
+        //         console.log('error', error);
+        //     })
+        dispatch(getDocApi(headers))
     }
     useEffect(() => {
         GetData();
     }, [open])
 
     const getdataS = () => {
-        axios.get(`http://127.0.0.1:8000/api/super-specialty/`).then((res) => {
-            // console.log(res.data);
-            setGetData(res.data);
-        })
+        // axios.get(`http://127.0.0.1:8000/api/super-specialty/`).then((res) => {
+        //     // console.log(res.data);
+        //     setGetData(res.data);
+        dispatch(Single_Get());
+        // })
     }
     useEffect(() => {
         getdataS();
@@ -319,7 +334,6 @@ export default function DocProfile() {
     const ShowProfile = () => {
         setDisplayimg(true)
     }
-
 
     // update code...
     const DoctorReg = (e) => {
@@ -400,7 +414,7 @@ export default function DocProfile() {
             {/* <Typography paragraph>Profile</Typography> */}
             {/* <button>Update Profile</button> */}
             <Stack spacing={2} direction="row">
-            <Link to="/sidemenu/update-profile"><Button variant="text">Update Profile</Button></Link>
+                <Link to="/sidemenu/update-profile"><Button variant="text">Update Profile</Button></Link>
             </Stack>
             {/* <Stack spacing={2} direction="row">
                 <Button variant="text">Update Profile</Button>
@@ -415,7 +429,7 @@ export default function DocProfile() {
                                 {DocProfile.profile_image && displayimg ?
                                     <Avatar className='BlrPr' alt='Doctor' onMouseEnter={BlurProfile} src={`http://127.0.0.1:8000/${DocProfile.profile_image}`} sx={{ width: '150px', height: '150px' }} />
                                     :
-                                    <Avatar className='ShrPr' alt='Doctor' onMouseOut={ShowProfile} sx={{ width: '150px', height: '150px' }} onClick={() => { handleOpen("Profile_image") }}><Button><CreateIcon /></Button></Avatar>
+                                    <Avatar className='ShrPr' alt='Doctor' onMouseOut={ShowProfile} sx={{ width: '150px', height: '150px' }} onClick={() => { handleOpen("Profile_image") }}><Button sx={{ border: 'none' }}><CreateIcon /></Button></Avatar>
                                 }
                             </Box>
                         </Grid>
@@ -423,8 +437,8 @@ export default function DocProfile() {
                             <Box>
                                 <br />
                                 {/* <Button onClick={() => { handleOpen("profile") }}><CreateIcon /></Button> */}
-                                <Typography variant='h5' component="div" sx={{ ml: 2.6 }}><b>Dr. {DocProfile.name}</b><Button className='styleButton' onClick={() => { handleOpen("profile") }}><CreateIcon fontSize="small" className="CrtIcn" /></Button></Typography>
-                                <Box display="flex" justifyContent="center" color="text.secondary">
+                                <Typography variant='h5' component="div" /*sx={{ ml: 2.6 }}*/><b>Dr. {DocProfile.name}</b><Button className='styleButton' onClick={() => { handleOpen("profile") }}><CreateIcon fontSize="small" className="CrtIcn" /></Button></Typography>
+                                <Box display="flex" justifyContent="start" color="text.secondary">
                                     {DocProfile.specialty_ ?
                                         DocProfile.specialty_.map((item, index) => {
                                             return (
@@ -433,7 +447,7 @@ export default function DocProfile() {
                                         })
                                         : null}
                                 </Box>
-                                <Typography paragraph color="text.secondary" sx={{ ml: 2.6 }}>{DocProfile.education}, {DocProfile.gender}, Exp: {DocProfile.experience} Year's</Typography>
+                                <Typography paragraph color="text.secondary" /*sx={{ ml: 2.6 }}*/>{DocProfile.education}, {DocProfile.gender}, Exp: {DocProfile.experience} Year's</Typography>
                             </Box>
                         </Grid>
                         <Grid item xs={12} md={4} lg={4} className='FirstBox' display="flex" justifyContent="start">
@@ -492,7 +506,7 @@ export default function DocProfile() {
                         {renderFormFields(getFormFields(updateFormtype))}
                     </Typography>
                     <Stack spacing={2} direction="row" display="flex" justifyContent="end">
-                        <Button variant="contained">Reset</Button>
+                        <Button variant="contained" onClick={resetUserData}>Reset</Button>
                         <Button variant="contained" type="submit" onClick={DoctorReg}>Submit</Button>
                     </Stack>
                 </Box>
